@@ -1,0 +1,6 @@
+C:\Users\velisj\Desktop\Demo_TheAionProject\TheAionProject.S1_Starter\bin\Debug\TheAionProject.exe.config
+C:\Users\velisj\Desktop\Demo_TheAionProject\TheAionProject.S1_Starter\obj\Debug\TheAionProject.exe
+C:\Users\velisj\Desktop\Demo_TheAionProject\TheAionProject.S1_Starter\obj\Debug\TheAionProject.pdb
+C:\Users\velisj\Desktop\Demo_TheAionProject\TheAionProject.S1_Starter\bin\Debug\TheAionProject.exe
+C:\Users\velisj\Desktop\Demo_TheAionProject\TheAionProject.S1_Starter\bin\Debug\TheAionProject.pdb
+C:\Users\velisj\Desktop\Demo_TheAionProject\TheAionProject.S1_Starter\obj\Debug\TheAionProject.S2_Starter.csprojResolveAssemblyReference.cache

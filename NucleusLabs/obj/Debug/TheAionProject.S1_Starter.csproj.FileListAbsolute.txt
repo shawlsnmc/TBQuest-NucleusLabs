@@ -1,0 +1,7 @@
+C:\Users\velisj\Git\NMC\CIT195\Demo_TheAionProject\TheAionProject.S1_Starter\obj\Debug\TheAionProject.S1_Starter.csprojResolveAssemblyReference.cache
+C:\Users\velisj\Git\NMC\CIT195\Demo_TheAionProject\TheAionProject.S1_Starter\bin\Debug\TheAionProject.exe.config
+C:\Users\velisj\Git\NMC\CIT195\Demo_TheAionProject\TheAionProject.S1_Starter\bin\Debug\TheAionProject.exe
+C:\Users\velisj\Git\NMC\CIT195\Demo_TheAionProject\TheAionProject.S1_Starter\bin\Debug\TheAionProject.pdb
+C:\Users\velisj\Git\NMC\CIT195\Demo_TheAionProject\TheAionProject.S1_Starter\obj\Debug\TheAionProject.exe
+C:\Users\velisj\Git\NMC\CIT195\Demo_TheAionProject\TheAionProject.S1_Starter\obj\Debug\TheAionProject.pdb
+C:\Users\velisj\Git\NMC\CIT195\Demo_TheAionProject\TheAionProject.S1_Starter\obj\Debug\TheAionProject.S1_Starter.csproj.CoreCompileInputs.cache
