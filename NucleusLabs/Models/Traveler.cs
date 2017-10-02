@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TheAionProject
+namespace NucleusLabs
 {
     /// <summary>
     /// the character class the player uses in the game

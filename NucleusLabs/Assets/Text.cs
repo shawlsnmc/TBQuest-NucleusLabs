@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TheAionProject
+namespace NucleusLabs
 {
     /// <summary>
     /// class to store static and to generate dynamic text for the message and input boxes

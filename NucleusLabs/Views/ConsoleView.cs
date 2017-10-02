@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TheAionProject
+namespace NucleusLabs
 {
     /// <summary>
     /// view class
@@ -178,15 +178,15 @@ namespace TheAionProject
 
             Console.SetCursorPosition(0, 10);
             string tabSpace = new String(' ', 35);
-            Console.WriteLine(tabSpace + @" _____ _              ___  _               ______          _           _   ");
-            Console.WriteLine(tabSpace + @"|_   _| |            / _ \(_)              | ___ \        (_)         | |  ");
-            Console.WriteLine(tabSpace + @"  | | | |__   ___   / /_\ \_  ___  _ __    | |_/ _ __ ___  _  ___  ___| |_ ");
-            Console.WriteLine(tabSpace + @"  | | | '_ \ / _ \  |  _  | |/ _ \| '_ \   |  __| '__/ _ \| |/ _ \/ __| __|");
-            Console.WriteLine(tabSpace + @"  | | | | | |  __/  | | | | | (_) | | | |  | |  | | | (_) | |  __| (__| |_ ");
-            Console.WriteLine(tabSpace + @"  \_/ |_| |_|\___|  \_| |_|_|\___/|_| |_|  \_|  |_|  \___/| |\___|\___|\__|");
-            Console.WriteLine(tabSpace + @"                                                         _/ |              ");
-            Console.WriteLine(tabSpace + @"                                                        |__/             ");
+            Console.WriteLine(tabSpace + @"");
 
+            Console.WriteLine(tabSpace + @" _______                .__                      .____          ___.           ");
+            Console.WriteLine(tabSpace + @" \      \  __ __   ____ |  |   ____  __ __  _____|    |   _____ \_ |__   ______");
+            Console.WriteLine(tabSpace + @" /   |   \|  |  \_/ ___\|  | _/ __ \|  |  \/  ___/    |   \__  \ | __ \ /  ___/");
+            Console.WriteLine(tabSpace + @"/    |    \  |  /\  \___|  |_\  ___/|  |  /\___ \|    |___ / __ \| \_\ \\___ \ ");
+            Console.WriteLine(tabSpace + @"\____ |__  /____/  \___  >____/\___  >____//____  >_______ (____  /___  /____  >");
+            Console.WriteLine(tabSpace + @"         \/            \/          \/           \/        \/    \/    \/     \/ ");
+            
             Console.SetCursorPosition(80, 25);
             Console.Write("Press any key to continue or Esc to exit.");
             keyPressed = Console.ReadKey();

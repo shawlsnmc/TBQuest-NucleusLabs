@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TheAionProject
+namespace NucleusLabs
 {
     /// <summary>
     /// static class sets the layout of the game screen

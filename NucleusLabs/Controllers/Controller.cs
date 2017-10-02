@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TheAionProject
+namespace NucleusLabs
 {
     /// <summary>
     /// controller for the MVC pattern in the application
