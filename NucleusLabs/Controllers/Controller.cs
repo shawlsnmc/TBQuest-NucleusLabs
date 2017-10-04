@@ -14,7 +14,7 @@ namespace NucleusLabs
         #region FIELDS
 
         private ConsoleView _gameConsoleView;
-        private Traveler _gameTraveler;
+        private Player _gamePlayer;
         private bool _playingGame;
 
         #endregion
@@ -48,8 +48,8 @@ namespace NucleusLabs
         /// </summary>
         private void InitializeGame()
         {
-            _gameTraveler = new Traveler();
-            _gameConsoleView = new ConsoleView(_gameTraveler);
+            _gamePlayer = new Player();
+            _gameConsoleView = new ConsoleView(_gamePlayer);
             _playingGame = true;
 
             Console.CursorVisible = false;
@@ -60,7 +60,7 @@ namespace NucleusLabs
         /// </summary>
         private void ManageGameLoop()
         {
-            TravelerAction travelerActionChoice = TravelerAction.None;
+            PlayerAction PlayerActionChoice = PlayerAction.None;
 
             //
             // display splash screen
@@ -78,11 +78,11 @@ namespace NucleusLabs
             //
             // display introductory message
             //
-            _gameConsoleView.DisplayGamePlayScreen("Mission Intro", Text.MissionIntro(), ActionMenu.MissionIntro, "");
+            _gameConsoleView.DisplayGamePlayScreen("Mission Intro", Text.GameIntro(), ActionMenu.MissionIntro, "");
             _gameConsoleView.GetContinueKey();
 
             //
-            // initialize the mission traveler
+            // initialize the mission Player
             // 
             InitializeMission();
 
@@ -99,21 +99,21 @@ namespace NucleusLabs
                 //
                 // get next game action from player
                 //
-                travelerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.MainMenu);
+                PlayerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.MainMenu);
 
                 //
                 // choose an action based on the player's menu choice
                 //
-                switch (travelerActionChoice)
+                switch (PlayerActionChoice)
                 {
-                    case TravelerAction.None:
+                    case PlayerAction.None:
                         break;
 
-                    case TravelerAction.TravelerInfo:
-                        _gameConsoleView.DisplayTravelerInfo();
+                    case PlayerAction.PlayerInfo:
+                        _gameConsoleView.DisplayPlayerInfo();
                         break;
 
-                    case TravelerAction.Exit:
+                    case PlayerAction.Exit:
                         _playingGame = false;
                         break;
 
@@ -133,12 +133,11 @@ namespace NucleusLabs
         /// </summary>
         private void InitializeMission()
         {
-            Traveler traveler = _gameConsoleView.GetInitialTravelerInfo();
+            Player Player = _gameConsoleView.GetInitialPlayerInfo();
 
-            _gameTraveler.Name = traveler.Name;
-            _gameTraveler.Age = traveler.Age;
-            _gameTraveler.Race = traveler.Race;
-            _gameTraveler.SpaceTimeLocationID = 1;
+            _gamePlayer.Name = Player.Name;
+            _gamePlayer.Gender = Player.Gender;
+            _gamePlayer.LocationID = 1;
         }
 
         #endregion

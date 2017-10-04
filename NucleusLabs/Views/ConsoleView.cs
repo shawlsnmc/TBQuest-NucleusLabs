@@ -15,7 +15,7 @@ namespace NucleusLabs
 
         private enum ViewStatus
         {
-            TravelerInitialization,
+            PlayerInitialization,
             PlayingGame
         }
 
@@ -26,7 +26,7 @@ namespace NucleusLabs
         //
         // declare game objects for the ConsoleView object to use
         //
-        Traveler _gameTraveler;
+        Player _gamePlayer;
 
         ViewStatus _viewStatus;
 
@@ -41,11 +41,11 @@ namespace NucleusLabs
         /// <summary>
         /// default constructor to create the console view objects
         /// </summary>
-        public ConsoleView(Traveler gameTraveler)
+        public ConsoleView(Player gamePlayer)
         {
-            _gameTraveler = gameTraveler;
+            _gamePlayer = gamePlayer;
 
-            _viewStatus = ViewStatus.TravelerInitialization;
+            _viewStatus = ViewStatus.PlayerInitialization;
 
             InitializeDisplay();
         }
@@ -90,9 +90,9 @@ namespace NucleusLabs
         /// get a action menu choice from the user
         /// </summary>
         /// <returns>action menu choice</returns>
-        public TravelerAction GetActionMenuChoice(Menu menu)
+        public PlayerAction GetActionMenuChoice(Menu menu)
         {
-            TravelerAction choosenAction = TravelerAction.None;
+            PlayerAction choosenAction = PlayerAction.None;
 
             //
             // TODO validate menu choices
@@ -150,15 +150,15 @@ namespace NucleusLabs
         }
 
         /// <summary>
-        /// get a character race value from the user
+        /// get a character Gender value from the user
         /// </summary>
-        /// <returns>character race value</returns>
-        public Character.RaceType GetRace()
+        /// <returns>character Gender value</returns>
+        public Player.Genders GetGender()
         {
-            Character.RaceType raceType;
-            Enum.TryParse<Character.RaceType>(Console.ReadLine(), out raceType);
+            Player.Genders Gender;
+            Enum.TryParse<Player.Genders>(Console.ReadLine(), out Gender);
 
-            return raceType;
+            return Gender;
         }
 
         /// <summary>
@@ -176,19 +176,30 @@ namespace NucleusLabs
             Console.CursorVisible = false;
 
 
-            Console.SetCursorPosition(0, 10);
             string tabSpace = new String(' ', 35);
-            Console.WriteLine(tabSpace + @"");
 
-            Console.WriteLine(tabSpace + @" _______                .__                      .____          ___.           ");
-            Console.WriteLine(tabSpace + @" \      \  __ __   ____ |  |   ____  __ __  _____|    |   _____ \_ |__   ______");
-            Console.WriteLine(tabSpace + @" /   |   \|  |  \_/ ___\|  | _/ __ \|  |  \/  ___/    |   \__  \ | __ \ /  ___/");
-            Console.WriteLine(tabSpace + @"/    |    \  |  /\  \___|  |_\  ___/|  |  /\___ \|    |___ / __ \| \_\ \\___ \ ");
-            Console.WriteLine(tabSpace + @"\____ |__  /____/  \___  >____/\___  >____//____  >_______ (____  /___  /____  >");
-            Console.WriteLine(tabSpace + @"         \/            \/          \/           \/        \/    \/    \/     \/ ");
-            
-            Console.SetCursorPosition(80, 25);
-            Console.Write("Press any key to continue or Esc to exit.");
+            for (int i = ConsoleLayout.WindowHeight; i > ((ConsoleLayout.WindowHeight) / 2-7); i--)
+            {
+                Console.SetCursorPosition(0, i);
+                if (i < (ConsoleLayout.WindowHeight - 1)) { Console.WriteLine(tabSpace + @""); }
+                if (i < (ConsoleLayout.WindowHeight - 2)) { Console.WriteLine(tabSpace + @"  _______                .__                      .____          ___.           "); }
+                if (i < (ConsoleLayout.WindowHeight - 3)) { Console.WriteLine(tabSpace + @"  \      \  __ __   ____ |  |   ____  __ __  _____|    |   _____ \_ |__   ______"); }
+                if (i < (ConsoleLayout.WindowHeight - 4)) { Console.WriteLine(tabSpace + @"  /   |   \|  |  \_/ ___\|  | _/ __ \|  |  \/  ___/    |   \__  \ | __ \ /  ___/"); }
+                if (i < (ConsoleLayout.WindowHeight - 5)) { Console.WriteLine(tabSpace + @" /    |    \  |  /\  \___|  |_\  ___/|  |  /\___ \|    |___ / __ \| \_\ \\___ \ "); }
+                if (i < (ConsoleLayout.WindowHeight - 6)) { Console.WriteLine(tabSpace + @"\____ |__  /____/  \___  >____/\___  >____//____  >_______ (____  /___  /____  >"); }
+                if (i < (ConsoleLayout.WindowHeight - 7)) { Console.WriteLine(tabSpace + @"         \/            \/          \/           \/        \/    \/    \/     \/ "); }
+                if (i < (ConsoleLayout.WindowHeight - 8)) { Console.WriteLine(new String(' ', ConsoleLayout.WindowWidth)); }
+                System.Threading.Thread.Sleep(100);
+            }
+
+
+
+            Console.SetCursorPosition(80, ((ConsoleLayout.WindowHeight) / 2)+7);
+            Console.WriteLine("Press any key to continue or Esc to exit.");
+            Console.WriteLine("");
+
+
+
             keyPressed = Console.ReadKey();
             if (keyPressed.Key == ConsoleKey.Escape)
             {
@@ -209,7 +220,7 @@ namespace NucleusLabs
             ConsoleWindowControl.DisableResize();
             ConsoleWindowControl.DisableMaximize();
             ConsoleWindowControl.DisableMinimize();
-            Console.Title = "The Aion Project";
+            Console.Title = "NucleusLabs";
 
             //
             // set the default console window values
@@ -252,9 +263,9 @@ namespace NucleusLabs
             Console.ForegroundColor = ConsoleTheme.MenuForegroundColor;
             int topRow = ConsoleLayout.MenuBoxPositionTop + 3;
 
-            foreach (KeyValuePair<char, TravelerAction> menuChoice in menu.MenuChoices)
+            foreach (KeyValuePair<char, PlayerAction> menuChoice in menu.MenuChoices)
             {
-                if (menuChoice.Value != TravelerAction.None)
+                if (menuChoice.Value != PlayerAction.None)
                 {
                     string formatedMenuChoice = ConsoleWindowHelper.ToLabelFormat(menuChoice.Value.ToString());
                     Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
@@ -346,7 +357,7 @@ namespace NucleusLabs
                 //
                 int startingRow = ConsoleLayout.StatusBoxPositionTop + 3;
                 int row = startingRow;
-                foreach (string statusTextLine in Text.StatusBox(_gameTraveler))
+                foreach (string statusTextLine in Text.StatusBox(_gamePlayer))
                 {
                     Console.SetCursorPosition(ConsoleLayout.StatusBoxPositionLeft + 3, row);
                     Console.Write(statusTextLine);
@@ -426,10 +437,10 @@ namespace NucleusLabs
         /// <summary>
         /// get the player's initial information at the beginning of the game
         /// </summary>
-        /// <returns>traveler object with all properties updated</returns>
-        public Traveler GetInitialTravelerInfo()
+        /// <returns>Player object with all properties updated</returns>
+        public Player GetInitialPlayerInfo()
         {
-            Traveler traveler = new Traveler();
+            Player Player = new Player();
 
             //
             // intro
@@ -438,32 +449,32 @@ namespace NucleusLabs
             GetContinueKey();
 
             //
-            // get traveler's name
+            // get Player's name
             //
-            DisplayGamePlayScreen("Mission Initialization - Name", Text.InitializeMissionGetTravelerName(), ActionMenu.MissionIntro, "");
+            DisplayGamePlayScreen("Mission Initialization - Name", Text.InitializeMissionGetPlayerName(), ActionMenu.MissionIntro, "");
             DisplayInputBoxPrompt("Enter your name: ");
-            traveler.Name = GetString();
+            Player.Name = GetString();
+
+            ////
+            //// get Player's age
+            ////
+            //DisplayGamePlayScreen("Mission Initialization - Age", Text.InitializeMissionGetPlayerAge(Player.Name), ActionMenu.MissionIntro, "");
+            //int gamePlayerAge;
+
+            //GetInteger($"Enter your age {Player.Name}: ", 0, 1000000, out gamePlayerAge);
+            //Player.Age = gamePlayerAge;
 
             //
-            // get traveler's age
+            // get Player's Gender
             //
-            DisplayGamePlayScreen("Mission Initialization - Age", Text.InitializeMissionGetTravelerAge(traveler.Name), ActionMenu.MissionIntro, "");
-            int gameTravelerAge;
-
-            GetInteger($"Enter your age {traveler.Name}: ", 0, 1000000, out gameTravelerAge);
-            traveler.Age = gameTravelerAge;
+            DisplayGamePlayScreen("Mission Initialization - Gender", Text.InitializeMissionGetPlayerGender(Player), ActionMenu.MissionIntro, "");
+            DisplayInputBoxPrompt($"Enter your Gender {Player.Name}: ");
+            Player.Gender = GetGender();
 
             //
-            // get traveler's race
+            // echo the Player's info
             //
-            DisplayGamePlayScreen("Mission Initialization - Race", Text.InitializeMissionGetTravelerRace(traveler), ActionMenu.MissionIntro, "");
-            DisplayInputBoxPrompt($"Enter your race {traveler.Name}: ");
-            traveler.Race = GetRace();
-
-            //
-            // echo the traveler's info
-            //
-            DisplayGamePlayScreen("Mission Initialization - Complete", Text.InitializeMissionEchoTravelerInfo(traveler), ActionMenu.MissionIntro, "");
+            DisplayGamePlayScreen("Mission Initialization - Complete", Text.InitializeMissionEchoPlayerInfo(Player), ActionMenu.MissionIntro, "");
             GetContinueKey();
 
             // 
@@ -471,14 +482,14 @@ namespace NucleusLabs
             //
             _viewStatus = ViewStatus.PlayingGame;
 
-            return traveler;
+            return Player;
         }
 
         #region ----- display responses to menu action choices -----
 
-        public void DisplayTravelerInfo()
+        public void DisplayPlayerInfo()
         {
-            DisplayGamePlayScreen("Traveler Information", Text.TravelerInfo(_gameTraveler), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen("Player Information", Text.PlayerInfo(_gamePlayer), ActionMenu.MainMenu, "");
         }
 
         #endregion

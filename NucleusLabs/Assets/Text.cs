@@ -11,26 +11,25 @@ namespace NucleusLabs
     /// </summary>
     public static class Text
     {
-        public static List<string> HeaderText = new List<string>() { "The Aion Project" };
-        public static List<string> FooterText = new List<string>() { "Laughing Leaf Productions, 2016" };
+        public static List<string> HeaderText = new List<string>() { "NucleusLabs" };
+        public static List<string> FooterText = new List<string>() { "Lame Headache Productions, 2017" };
 
         #region INTITIAL GAME SETUP
 
-        public static string MissionIntro()
+        public static string GameIntro()
         {
             string messageBoxText =
-            "You have been hired by the Norlon Corporation to participate " +
-            "in its latest endeavor, the Aion Project. Your mission is to " +
-            "test the limits of the new Aion Engine and report back to " +
-            "the Norlon Corporation.\n" +
+            "You wake up with no clue where you are or why you are locked in this room. " +
+            "You remember you were with your best friend before whatever happened that got you into this mess. "+
+            "You will need to look for clues and solve puzzles in order to rescue your friend and yourself. "+
+            " \n" +
+            "Keep an eye on your health meter, if it hits 0, it's game over."+
             " \n" +
             "Press the Esc key to exit the game at any point.\n" +
             " \n" +
-            "Your mission begins now.\n" +
+            "\tFirst I need to get some inforamion from you so the narrative doesn't sound completely stupid.\n" +
             " \n" +
-            "\tYour first task will be to set up the initial parameters of your mission.\n" +
-            " \n" +
-            "\tPress any key to begin the Mission Initialization Process.\n";
+            "\tPress any key to begin.\n";
 
             return messageBoxText;
         }
@@ -38,10 +37,7 @@ namespace NucleusLabs
         public static string CurrrentLocationInfo()
         {
             string messageBoxText =
-            "You are now in the Norlon Corporation research facility located in " +
-            "the city of Heraklion on the north coast of Crete. You have passed through " +
-            "heavy security and descended an unknown number of levels to the top secret " +
-            "research lab for the Aion Project.\n" +
+            "Wakey Wakey!\n" +
             " \n" +
             "\tChoose from the menu options to proceed.\n";
 
@@ -53,75 +49,58 @@ namespace NucleusLabs
         public static string InitializeMissionIntro()
         {
             string messageBoxText =
-                "Before you begin your mission we much gather your base data.\n" +
-                " \n" +
-                "You will be prompted for the required information. Please enter the information below.\n" +
+                "Before you begin I need some required information. Please enter the information below.\n" +
                 " \n" +
                 "\tPress any key to begin.";
 
             return messageBoxText;
         }
 
-        public static string InitializeMissionGetTravelerName()
+        public static string InitializeMissionGetPlayerName()
         {
             string messageBoxText =
-                "Enter your name traveler.\n" +
+                "Enter your name Player.\n" +
                 " \n" +
-                "Please use the name you wish to be referred during your mission.";
+                "Please use the name you wish to be referred during your time here.";
 
             return messageBoxText;
         }
+        
 
-        public static string InitializeMissionGetTravelerAge(string name)
+        public static string InitializeMissionGetPlayerGender(Player gamePlayer)
         {
             string messageBoxText =
-                $"Very good then, we will call you {name} on this mission.\n" +
+                $"{gamePlayer.Name}, it will be important for us to know your gender.\n" +
                 " \n" +
-                "Enter your age below.\n" +
+                "Enter your gender below.\n" +
                 " \n" +
-                "Please use the standard Earth year as your reference.";
-
-            return messageBoxText;
-        }
-
-        public static string InitializeMissionGetTravelerRace(Traveler gameTraveler)
-        {
-            string messageBoxText =
-                $"{gameTraveler.Name}, it will be important for us to know your race on this mission.\n" +
-                " \n" +
-                "Enter your race below.\n" +
-                " \n" +
-                "Please use the universal race classifications below." +
+                "Your options are," +
                 " \n";
 
-            string raceList = null;
+            string GenderList = null;
 
-            foreach (Character.RaceType race in Enum.GetValues(typeof(Character.RaceType)))
+            foreach (Player.Genders Gender in Enum.GetValues(typeof(Player.Genders)))
             {
-                if (race != Character.RaceType.None)
-                {
-                    raceList += $"\t{race}\n";
-                }
+                GenderList += $"\t{Gender}\n";
             }
 
-            messageBoxText += raceList;
+            messageBoxText += GenderList;
 
             return messageBoxText;
         }
 
-        public static string InitializeMissionEchoTravelerInfo(Traveler gameTraveler)
+        public static string InitializeMissionEchoPlayerInfo(Player gamePlayer)
         {
             string messageBoxText =
-                $"Very good then {gameTraveler.Name}.\n" +
+                $"Very good then {gamePlayer.Name}.\n" +
                 " \n" +
-                "It appears we have all the necessary data to begin your mission. You will find it" +
+                "It appears we have all the necessary data to begin your game. You will find it" +
                 " listed below.\n" +
                 " \n" +
-                $"\tTraveler Name: {gameTraveler.Name}\n" +
-                $"\tTraveler Age: {gameTraveler.Age}\n" +
-                $"\tTraveler Race: {gameTraveler.Race}\n" +
+                $"\tPlayer Name: {gamePlayer.Name}\n" +
+                $"\tPlayer Gender: {gamePlayer.Gender}\n" +
                 " \n" +
-                "Press any key to begin your mission.";
+                "Press any key to begin.";
 
             return messageBoxText;
         }
@@ -132,12 +111,11 @@ namespace NucleusLabs
 
         #region MAIN MENU ACTION SCREENS
 
-        public static string TravelerInfo(Traveler gameTraveler)
+        public static string PlayerInfo(Player gamePlayer)
         {
             string messageBoxText =
-                $"\tTraveler Name: {gameTraveler.Name}\n" +
-                $"\tTraveler Age: {gameTraveler.Age}\n" +
-                $"\tTraveler Race: {gameTraveler.Race}\n" +
+                $"\tPlayer Name: {gamePlayer.Name}\n" +
+                $"\tPlayer Gender: {gamePlayer.Gender}\n" +
                 " \n";
 
             return messageBoxText;
@@ -145,11 +123,11 @@ namespace NucleusLabs
 
         #endregion
 
-        public static List<string> StatusBox(Traveler traveler)
+        public static List<string> StatusBox(Player Player)
         {
             List<string> statusBoxText = new List<string>();
 
-            statusBoxText.Add($"Traveler's Age: {traveler.Age}\n");
+            statusBoxText.Add($"Player's Gender: {Player.Gender}\n");
 
             return statusBoxText;
         }

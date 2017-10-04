@@ -9,23 +9,18 @@ namespace NucleusLabs
     /// <summary>
     /// enum of all possible player actions
     /// </summary>
-    public enum TravelerAction
+    public enum PlayerAction
     {
         None,
         MissionSetup,
         LookAround,
         LookAt,
         PickUpItem,
-        PickUpTreasure,
         PutDownItem,
-        PutDownTreasure,
         Travel,
-        TravelerInfo,
-        TravelerInventory,
-        TravelerTreasure,
-        ListSpaceTimeLocations,
+        PlayerInfo,
+        PlayerInventory,
         ListItems,
-        ListTreasures,
         Exit
     }
 }

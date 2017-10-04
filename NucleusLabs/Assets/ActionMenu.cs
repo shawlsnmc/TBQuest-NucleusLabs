@@ -15,9 +15,9 @@ namespace NucleusLabs
         {
             MenuName = "MissionIntro",
             MenuTitle = "",
-            MenuChoices = new Dictionary<char, TravelerAction>()
+            MenuChoices = new Dictionary<char, PlayerAction>()
                     {
-                        { ' ', TravelerAction.None }
+                        { ' ', PlayerAction.None }
                     }
         };
 
@@ -25,9 +25,9 @@ namespace NucleusLabs
         {
             MenuName = "InitializeMission",
             MenuTitle = "Initialize Mission",
-            MenuChoices = new Dictionary<char, TravelerAction>()
+            MenuChoices = new Dictionary<char, PlayerAction>()
                 {
-                    { '1', TravelerAction.Exit }
+                    { '1', PlayerAction.Exit }
                 }
         };
 
@@ -35,10 +35,10 @@ namespace NucleusLabs
         {
             MenuName = "MainMenu",
             MenuTitle = "Main Menu",
-            MenuChoices = new Dictionary<char, TravelerAction>()
+            MenuChoices = new Dictionary<char, PlayerAction>()
                 {
-                    { '1', TravelerAction.TravelerInfo },
-                    { '2', TravelerAction.Exit }
+                    { '1', PlayerAction.PlayerInfo },
+                    { '2', PlayerAction.Exit }
                 }
         };
     }

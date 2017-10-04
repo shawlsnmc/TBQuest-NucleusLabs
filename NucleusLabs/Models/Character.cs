@@ -13,12 +13,13 @@ namespace NucleusLabs
     {
         #region ENUMERABLES
 
-        public enum RaceType
+        public enum CharacterType
         {
-            None,
-            Human,
-            Thorian,
-            Xantorian
+            Player,
+            PlayerNPC,
+            Rodent,
+            Dog,
+            Cat
         }
 
         #endregion
@@ -26,13 +27,20 @@ namespace NucleusLabs
         #region FIELDS
 
         private string _name;
-        private int _spaceTimeLocationID;
-        private int _age;
-        private RaceType _race;
+        private int _locationID;
+        private bool _isNPC;
 
         #endregion
 
         #region PROPERTIES
+        
+
+
+        public bool InNPC
+        {
+            get { return _isNPC; }
+            set { _isNPC = value; }
+        }
 
         public string Name
         {
@@ -40,23 +48,12 @@ namespace NucleusLabs
             set { _name = value; }
         }
 
-        public int SpaceTimeLocationID
+        public int LocationID
         {
-            get { return _spaceTimeLocationID; }
-            set { _spaceTimeLocationID = value; }
+            get { return _locationID; }
+            set { _locationID = value; }
         }
 
-        public int Age
-        {
-            get { return _age; }
-            set { _age = value; }
-        }
-
-        public RaceType Race
-        {
-            get { return _race; }
-            set { _race = value; }
-        }
 
         #endregion
 
@@ -67,11 +64,11 @@ namespace NucleusLabs
 
         }
 
-        public Character(string name, RaceType race, int spaceTimeLocationID)
+        public Character(string name, int locationID, bool isNPC)
         {
             _name = name;
-            _race = race;
-            _spaceTimeLocationID = spaceTimeLocationID;
+            _locationID = locationID;
+            _isNPC = isNPC;
         }
 
         #endregion
