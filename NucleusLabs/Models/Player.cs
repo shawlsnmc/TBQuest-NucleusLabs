@@ -14,6 +14,7 @@ namespace NucleusLabs
         #region ENUMERABLES
         public enum Genders
         {
+            None,
             Male,
             Female
         }
@@ -30,13 +31,13 @@ namespace NucleusLabs
             set { _health = value; }
         }
 
+        public int Xp { get; set; }
 
         public Genders Gender
         {
             get { return _gender; }
             set { _gender = value; }
         }
-
 
         #endregion
         #region PROPERTIES
@@ -49,16 +50,13 @@ namespace NucleusLabs
 
         public Player()
         {
-
+            this.Health = 100;
         }
 
-        public Player(string name, Genders gender, int locationID, bool isNPC) : base(name, locationID, isNPC)
-        {
 
-        }
-        public Player(string name, Genders gender, int locationID, bool isNPC, int health) : base(name, locationID, isNPC)
+        public Player(string name, Genders gender, int locationID, bool isNPC, int health = 100) : base(name, locationID, isNPC)
         {
-
+            this.Health = health;
         }
 
         #endregion
@@ -66,6 +64,21 @@ namespace NucleusLabs
 
         #region METHODS
 
+        public override string Greeting()
+        {
+            return "Welcome Player whom goes by " + this.Name+"!" ;
+        }
+
+        public void TravelTo(int LocationID, GameMap map)
+        {
+            //If we want to trigger code on character travel we do it here
+            this.UpdateLocation(LocationID);
+            if(!map.GetLocationVisited(LocationID)){
+                this.Xp++;
+                map.SetLocationVisited(LocationID);
+            }
+        }
+        
 
         #endregion
     }

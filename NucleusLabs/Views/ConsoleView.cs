@@ -60,7 +60,8 @@ namespace NucleusLabs
         /// <param name="messageBoxText">message box text</param>
         /// <param name="menu">menu to use</param>
         /// <param name="inputBoxPrompt">input box text</param>
-        public void DisplayGamePlayScreen(string messageBoxHeaderText, string messageBoxText, Menu menu, string inputBoxPrompt)
+        /// <param name="availableNavigation">array of availible navigation north,south,east,west,up,down</param>
+        public void DisplayGamePlayScreen(string messageBoxHeaderText, string messageBoxText, Menu menu, string inputBoxPrompt, bool[] availableNavigation = null)
         {
             //
             // reset screen to default window colors
@@ -73,7 +74,7 @@ namespace NucleusLabs
             ConsoleWindowHelper.DisplayFooter(Text.FooterText);
 
             DisplayMessageBox(messageBoxHeaderText, messageBoxText);
-            DisplayMenuBox(menu);
+            DisplayMenuBox(menu, availableNavigation);
             DisplayInputBox();
             DisplayStatusBox();
         }
@@ -90,17 +91,47 @@ namespace NucleusLabs
         /// get a action menu choice from the user
         /// </summary>
         /// <returns>action menu choice</returns>
-        public PlayerAction GetActionMenuChoice(Menu menu)
+        public PlayerAction GetActionMenuChoice(Menu menu,bool getNavigation = false)
         {
             PlayerAction choosenAction = PlayerAction.None;
 
-            //
-            // TODO validate menu choices
-            //
-            ConsoleKeyInfo keyPressedInfo = Console.ReadKey();
-            char keyPressed = keyPressedInfo.KeyChar;
-            choosenAction = menu.MenuChoices[keyPressed];
 
+
+            ConsoleKeyInfo keyPressedInfo = Console.ReadKey();
+
+            if (getNavigation == true) {
+                switch (keyPressedInfo.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        choosenAction = PlayerAction.TravelNorth;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        choosenAction = PlayerAction.TravelSouth;
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        choosenAction = PlayerAction.TravelWest;
+                        break;
+                    case ConsoleKey.RightArrow:
+                        choosenAction = PlayerAction.TravelEast;
+                        break;
+                    case ConsoleKey.PageUp:
+                        choosenAction = PlayerAction.TravelUp;
+                        break;
+                    case ConsoleKey.PageDown:
+                        choosenAction = PlayerAction.TravelDown;
+                        break;
+                }
+            }
+
+            //if player didn't press an arrow key make sure it's a valid menu option
+            if (choosenAction == PlayerAction.None)
+            {
+                //
+                // TODO validate menu choices
+                //
+                char keyPressed = keyPressedInfo.KeyChar;
+                choosenAction = menu.MenuChoices[keyPressed];
+            }
             return choosenAction;
         }
 
@@ -156,8 +187,7 @@ namespace NucleusLabs
         public Player.Genders GetGender()
         {
             Player.Genders Gender;
-            Enum.TryParse<Player.Genders>(Console.ReadLine(), out Gender);
-
+            Enum.TryParse<Player.Genders>(Console.ReadLine(), true, out Gender);
             return Gender;
         }
 
@@ -234,7 +264,8 @@ namespace NucleusLabs
         /// display the correct menu in the menu box of the game screen
         /// </summary>
         /// <param name="menu">menu for current game state</param>
-        private void DisplayMenuBox(Menu menu)
+        /// <param name="availableNavigation">array of availible navigation north,south,east,west,up,down</param>
+        private void DisplayMenuBox(Menu menu, bool[] availableNavigation )
         {
             Console.BackgroundColor = ConsoleTheme.MenuBackgroundColor;
             Console.ForegroundColor = ConsoleTheme.MenuBorderColor;
@@ -272,6 +303,56 @@ namespace NucleusLabs
                     Console.Write($"{menuChoice.Key}. {formatedMenuChoice}");
                 }
             }
+
+            topRow++;
+            Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 2, topRow++);
+            Console.BackgroundColor = ConsoleTheme.MenuBorderColor;
+            Console.ForegroundColor = ConsoleTheme.MenuForegroundColor;
+            Console.Write(ConsoleWindowHelper.Center("Available Navigation", ConsoleLayout.MenuBoxWidth - 4));
+            Console.BackgroundColor = ConsoleTheme.MenuBackgroundColor;
+            Console.ForegroundColor = ConsoleTheme.MenuForegroundColor;
+
+            availableNavigation = availableNavigation ?? new bool[6];
+
+            Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
+            if (availableNavigation[0] == true) //North
+            {                
+                Console.Write("Up Arrow    - Travel North");
+            }
+
+            Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
+            if (availableNavigation[1] == true) //South
+            {
+                Console.Write("Down Arrow  - Travel South");
+            }
+
+            Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
+            if (availableNavigation[2] == true) //East
+            {
+                Console.Write("Right Arrow - Travel East");
+            }
+
+            Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
+            if (availableNavigation[3] == true) //West
+            {
+                Console.Write("Left Arrow  - Travel West");
+            }
+
+            Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
+            if (availableNavigation[4] == true) //Up
+            {
+                Console.Write("Page Up     - Travel Up");
+            }
+
+            Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
+            if (availableNavigation[5] == true) //Down
+            {
+                Console.Write("Page Down   - Travel Down");
+            }
+
+
+
+
         }
 
         /// <summary>
@@ -441,7 +522,7 @@ namespace NucleusLabs
         public Player GetInitialPlayerInfo()
         {
             Player Player = new Player();
-
+            
             //
             // intro
             //
@@ -467,14 +548,53 @@ namespace NucleusLabs
             //
             // get Player's Gender
             //
-            DisplayGamePlayScreen("Mission Initialization - Gender", Text.InitializeMissionGetPlayerGender(Player), ActionMenu.MissionIntro, "");
-            DisplayInputBoxPrompt($"Enter your Gender {Player.Name}: ");
-            Player.Gender = GetGender();
+            do
+            {
+                DisplayGamePlayScreen("Mission Initialization - Gender", Text.InitializeMissionGetPlayerGender(Player), ActionMenu.MissionIntro, "");
+                DisplayInputBoxPrompt($"Enter your Gender {Player.Name}: ");
+                Player.Gender = GetGender();
+            } while (Player.Gender == Player.Genders.None);
 
             //
             // echo the Player's info
             //
-            DisplayGamePlayScreen("Mission Initialization - Complete", Text.InitializeMissionEchoPlayerInfo(Player), ActionMenu.MissionIntro, "");
+            //DisplayGamePlayScreen("Mission Initialization - Complete", Text.InitializeMissionEchoPlayerInfo(Player), ActionMenu.MissionIntro, "");
+            //GetContinueKey();
+
+            // 
+            // change view status to playing game
+            //
+            //_viewStatus = ViewStatus.PlayingGame;
+
+            return Player;
+        }
+
+        public Player GetInitialAIInfo()
+        {
+            Player Player = new Player();
+
+
+            //
+            // get Player's name
+            //
+            DisplayGamePlayScreen("Mission Initialization - Partner's Name", Text.InitializeMissionGetAIName(), ActionMenu.MissionIntro, "");
+            DisplayInputBoxPrompt("Enter your partner's name: ");
+            Player.Name = GetString();
+
+            //
+            // get Player's Gender
+            //
+            do
+            {
+                DisplayGamePlayScreen("Mission Initialization - Partner's Gender", Text.InitializeMissionGetAIGender(Player), ActionMenu.MissionIntro, "");
+                DisplayInputBoxPrompt($"Enter {Player.Name} gender: ");
+                Player.Gender = GetGender();
+            } while (Player.Gender == Player.Genders.None);
+
+            //
+            // echo the Player's info
+            //
+            DisplayGamePlayScreen("Mission Initialization - Complete", Text.InitializeMissionEchoPlayerInfo(), ActionMenu.MissionIntro, "");
             GetContinueKey();
 
             // 
@@ -484,6 +604,7 @@ namespace NucleusLabs
 
             return Player;
         }
+
 
         #region ----- display responses to menu action choices -----
 

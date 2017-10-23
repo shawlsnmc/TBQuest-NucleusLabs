@@ -14,5 +14,6 @@ namespace NucleusLabs
         public string MenuName { get; set; }
         public string MenuTitle { get; set; }
         public Dictionary<char, PlayerAction> MenuChoices { get; set; }
+
     }
 }

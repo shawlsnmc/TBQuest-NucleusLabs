@@ -1,7 +1,7 @@
-C:\Users\sshawl\Desktop\school\CIT195-2017\TBQuest-NucleusLabs\NucleusLabs\bin\Debug\TheAionProject.exe.config
-C:\Users\sshawl\Desktop\school\CIT195-2017\TBQuest-NucleusLabs\NucleusLabs\bin\Debug\TheAionProject.exe
-C:\Users\sshawl\Desktop\school\CIT195-2017\TBQuest-NucleusLabs\NucleusLabs\bin\Debug\TheAionProject.pdb
 C:\Users\sshawl\Desktop\school\CIT195-2017\TBQuest-NucleusLabs\NucleusLabs\obj\Debug\NucleusLabs.csproj.CoreCompileInputs.cache
-C:\Users\sshawl\Desktop\school\CIT195-2017\TBQuest-NucleusLabs\NucleusLabs\obj\Debug\TheAionProject.exe
-C:\Users\sshawl\Desktop\school\CIT195-2017\TBQuest-NucleusLabs\NucleusLabs\obj\Debug\TheAionProject.pdb
 C:\Users\sshawl\Desktop\school\CIT195-2017\TBQuest-NucleusLabs\NucleusLabs\obj\Debug\NucleusLabs.csprojResolveAssemblyReference.cache
+C:\Users\sshawl\Desktop\school\CIT195-2017\TBQuest-NucleusLabs\NucleusLabs\bin\Debug\NucleusLabs.exe.config
+C:\Users\sshawl\Desktop\school\CIT195-2017\TBQuest-NucleusLabs\NucleusLabs\bin\Debug\NucleusLabs.exe
+C:\Users\sshawl\Desktop\school\CIT195-2017\TBQuest-NucleusLabs\NucleusLabs\bin\Debug\NucleusLabs.pdb
+C:\Users\sshawl\Desktop\school\CIT195-2017\TBQuest-NucleusLabs\NucleusLabs\obj\Debug\NucleusLabs.exe
+C:\Users\sshawl\Desktop\school\CIT195-2017\TBQuest-NucleusLabs\NucleusLabs\obj\Debug\NucleusLabs.pdb

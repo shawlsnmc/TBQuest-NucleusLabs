@@ -17,10 +17,15 @@ namespace NucleusLabs
         LookAt,
         PickUpItem,
         PutDownItem,
-        Travel,
         PlayerInfo,
         PlayerInventory,
         ListItems,
+        TravelNorth,
+        TravelSouth,
+        TravelEast,
+        TravelWest,
+        TravelUp,
+        TravelDown,
         Exit
     }
 }

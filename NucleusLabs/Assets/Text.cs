@@ -49,7 +49,7 @@ namespace NucleusLabs
         public static string InitializeMissionIntro()
         {
             string messageBoxText =
-                "Before you begin I need some required information. Please enter the information below.\n" +
+                "Before you begin I need some required information. Please enter all the required information on the following screens.\n" +
                 " \n" +
                 "\tPress any key to begin.";
 
@@ -65,7 +65,16 @@ namespace NucleusLabs
 
             return messageBoxText;
         }
-        
+
+        public static string InitializeMissionGetAIName()
+        {
+            string messageBoxText =
+                "Enter your partner's name.\n" +
+                " \n" +
+                "Please use the name you wish for us to use while referencing your partner during your time here.";
+
+            return messageBoxText;
+        }
 
         public static string InitializeMissionGetPlayerGender(Player gamePlayer)
         {
@@ -81,7 +90,9 @@ namespace NucleusLabs
 
             foreach (Player.Genders Gender in Enum.GetValues(typeof(Player.Genders)))
             {
-                GenderList += $"\t{Gender}\n";
+                if (!Gender.Equals(Player.Genders.None)){
+                    GenderList += $"\t{Gender}\n";
+                }
             }
 
             messageBoxText += GenderList;
@@ -89,16 +100,35 @@ namespace NucleusLabs
             return messageBoxText;
         }
 
-        public static string InitializeMissionEchoPlayerInfo(Player gamePlayer)
+        public static string InitializeMissionGetAIGender(Player gamePlayer)
         {
             string messageBoxText =
-                $"Very good then {gamePlayer.Name}.\n" +
+                $"Now we need to know {gamePlayer.Name}'s gender.\n" +
                 " \n" +
-                "It appears we have all the necessary data to begin your game. You will find it" +
-                " listed below.\n" +
+                $"Enter {gamePlayer.Name}'s gender below.\n" +
                 " \n" +
-                $"\tPlayer Name: {gamePlayer.Name}\n" +
-                $"\tPlayer Gender: {gamePlayer.Gender}\n" +
+                "Your options are," +
+                " \n";
+
+            string GenderList = null;
+
+            foreach (Player.Genders Gender in Enum.GetValues(typeof(Player.Genders)))
+            {
+                if (!Gender.Equals(Player.Genders.None))
+                {
+                    GenderList += $"\t{Gender}\n";
+                }
+            }
+
+            messageBoxText += GenderList;
+
+            return messageBoxText;
+        }
+
+        public static string InitializeMissionEchoPlayerInfo()
+        {
+            string messageBoxText =
+                "It appears we have all the necessary data to begin your game. \n" +
                 " \n" +
                 "Press any key to begin.";
 
@@ -114,8 +144,13 @@ namespace NucleusLabs
         public static string PlayerInfo(Player gamePlayer)
         {
             string messageBoxText =
+                $"\t{gamePlayer.Greeting()}\n" +
+                "\n"+
                 $"\tPlayer Name: {gamePlayer.Name}\n" +
                 $"\tPlayer Gender: {gamePlayer.Gender}\n" +
+                $"\tPlayer Location: {gamePlayer.LocationID}\n" +
+                $"\tPlayer Health: {gamePlayer.Health}\n" +
+                $"\tPlayer XP: {gamePlayer.Xp}\n" +
                 " \n";
 
             return messageBoxText;
@@ -125,9 +160,13 @@ namespace NucleusLabs
 
         public static List<string> StatusBox(Player Player)
         {
-            List<string> statusBoxText = new List<string>();
-
-            statusBoxText.Add($"Player's Gender: {Player.Gender}\n");
+            List<string> statusBoxText = new List<string>
+            {
+                $"Player's Gender: {Player.Gender}\n",
+                $"Player's Location: {Player.LocationID}\n",
+                $"Player's Health: {Player.Health}\n" ,
+                $"Player's XP: {Player.Xp}\n"
+            };
 
             return statusBoxText;
         }

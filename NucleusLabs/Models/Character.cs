@@ -51,9 +51,10 @@ namespace NucleusLabs
         public int LocationID
         {
             get { return _locationID; }
-            set { _locationID = value; }
+            //set { _locationID = value; }
         }
 
+        
 
         #endregion
 
@@ -75,6 +76,16 @@ namespace NucleusLabs
 
         #region METHODS
 
+        public virtual string Greeting()
+        {
+            return "Welcome Character! Who are you again?";
+        }
+
+        public virtual void UpdateLocation(int LocationID)
+        {
+            //If we want to trigger code on character travel we do it here
+            _locationID = LocationID;
+        }
 
 
         #endregion

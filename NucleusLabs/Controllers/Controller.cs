@@ -15,8 +15,9 @@ namespace NucleusLabs
 
         private ConsoleView _gameConsoleView;
         private Player _gamePlayer;
+        private Player _gameAI;
         private bool _playingGame;
-
+        private GameMap _gameMap;
         #endregion
 
         #region PROPERTIES
@@ -49,9 +50,10 @@ namespace NucleusLabs
         private void InitializeGame()
         {
             _gamePlayer = new Player();
+            _gameAI = new Player();
             _gameConsoleView = new ConsoleView(_gamePlayer);
             _playingGame = true;
-
+            _gameMap = new GameMap();
             Console.CursorVisible = false;
         }
 
@@ -89,7 +91,7 @@ namespace NucleusLabs
             //
             // prepare game play screen
             //
-            _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrrentLocationInfo(), ActionMenu.MainMenu, "");
+            _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrrentLocationInfo(), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
 
             //
             // game loop
@@ -99,7 +101,7 @@ namespace NucleusLabs
                 //
                 // get next game action from player
                 //
-                PlayerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.MainMenu);
+                PlayerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.MainMenu, true);
 
                 //
                 // choose an action based on the player's menu choice
@@ -117,6 +119,74 @@ namespace NucleusLabs
                         _playingGame = false;
                         break;
 
+                    case PlayerAction.TravelNorth:
+                        //bool temp = (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.North));
+
+                        if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.North)){
+                            _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.North),_gameMap);
+                            _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrrentLocationInfo(), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
+                            
+                        }
+                        else
+                        {
+                            //can't travel here
+                        }
+                        break;
+                    case PlayerAction.TravelSouth:
+                        if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.South)){
+                            _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.South),_gameMap);
+                            _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrrentLocationInfo(), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
+                            
+                        }
+                        else
+                        {
+                            //can't travel here
+                        }
+                        break;
+                    case PlayerAction.TravelEast:
+                        if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.East)){
+                            _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.East), _gameMap);
+                            _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrrentLocationInfo(), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
+                            
+                        }
+                        else
+                        {
+                            //can't travel here
+                        }
+                        break;
+                    case PlayerAction.TravelWest:
+                        if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.West)){
+                            _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.West), _gameMap);
+                            _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrrentLocationInfo(), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
+                            
+                        }
+                        else
+                        {
+                            //can't travel here
+                        }
+                        break;
+                    case PlayerAction.TravelUp:
+                        if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.Up)){
+                            _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.Up), _gameMap);
+                            _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrrentLocationInfo(), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
+                            
+                        }
+                        else
+                        {
+                            //can't travel here
+                        }
+                        break;
+                    case PlayerAction.TravelDown:
+                        if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.Down)){
+                            _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.Down), _gameMap);
+                            _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrrentLocationInfo(), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
+                            
+                        }
+                        else
+                        {
+                            //can't travel here
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -134,10 +204,13 @@ namespace NucleusLabs
         private void InitializeMission()
         {
             Player Player = _gameConsoleView.GetInitialPlayerInfo();
-
+            Player AI = _gameConsoleView.GetInitialAIInfo();
             _gamePlayer.Name = Player.Name;
             _gamePlayer.Gender = Player.Gender;
-            _gamePlayer.LocationID = 1;
+            _gamePlayer.TravelTo(611, _gameMap);
+            _gameAI.Name = AI.Name;
+            _gameAI.Gender = AI.Gender;
+            _gameAI.UpdateLocation(411);
         }
 
         #endregion
