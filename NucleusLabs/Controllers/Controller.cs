@@ -66,8 +66,8 @@ namespace NucleusLabs
         {
             PlayerAction PlayerActionChoice = PlayerAction.None;
 
-            bool skipintro = false; // set to true to show start screens
-            if (skipintro)
+            bool skipintro = true; // set to true to show start screens
+            if (!skipintro)
             {
 
                 //
@@ -96,7 +96,6 @@ namespace NucleusLabs
             }
             else
             {
-                _playingGame = true;
                 InitializeMission(true);
             }
             //
@@ -226,6 +225,7 @@ namespace NucleusLabs
                 _gameAI.Name = "Sue";
                 _gameAI.Gender = Player.Genders.Female;
                 _gameAI.UpdateLocation(411);
+                _gameConsoleView.setPlayingGame();
             }
             else
             {

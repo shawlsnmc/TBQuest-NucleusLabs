@@ -501,7 +501,7 @@ namespace NucleusLabs
                 Console.BackgroundColor = ConsoleTheme.StatusBoxBorderColor;
                 Console.ForegroundColor = ConsoleTheme.StatusBoxForegroundColor;
                 Console.SetCursorPosition(ConsoleLayout.StatusBoxPositionLeft + 2, ConsoleLayout.StatusBoxPositionTop + 1);
-                Console.Write(ConsoleWindowHelper.Center("", ConsoleLayout.StatusBoxWidth - 4));
+                Console.Write(ConsoleWindowHelper.Center("WTF", ConsoleLayout.StatusBoxWidth - 4));
                 Console.BackgroundColor = ConsoleTheme.StatusBoxBackgroundColor;
                 Console.ForegroundColor = ConsoleTheme.StatusBoxForegroundColor;
             }
@@ -653,6 +653,10 @@ namespace NucleusLabs
             return Player;
         }
 
+        public void setPlayingGame()
+        {
+            _viewStatus = ViewStatus.PlayingGame;
+        }
 
         #region ----- display responses to menu action choices -----
 
