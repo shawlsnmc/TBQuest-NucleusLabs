@@ -67,11 +67,11 @@ namespace NucleusLabs
             for (int i = 0; i < 500; i++)
             {
                 int UselessID = rand.Next(0, UselessItemNames.Count);
-                this.GameObjects.Add(new UselessItem { })
+                //this.GameObjects.Add(new UselessItem { })
             }
             
 
-            this.GameObjects.Add(new GameObject { })
+            //this.GameObjects.Add(new GameObject { })
 
 
         }
