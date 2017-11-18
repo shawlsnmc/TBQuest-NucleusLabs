@@ -66,30 +66,39 @@ namespace NucleusLabs
         {
             PlayerAction PlayerActionChoice = PlayerAction.None;
 
-            //
-            // display splash screen
-            //
-            _playingGame = _gameConsoleView.DisplaySpashScreen();
 
-            //
-            // player chooses to quit
-            //
-            if (!_playingGame)
-            {
-                Environment.Exit(1);
+            if (false)
+            { // set to true to show start screens
+
+                //
+                // display splash screen
+                //
+                _playingGame = _gameConsoleView.DisplaySpashScreen();
+
+                //
+                // player chooses to quit
+                //
+                if (!_playingGame)
+                {
+                    Environment.Exit(1);
+                }
+
+                //
+                // display introductory message
+                //
+                _gameConsoleView.DisplayGamePlayScreen("Mission Intro", Text.GameIntro(), ActionMenu.MissionIntro, "");
+                _gameConsoleView.GetContinueKey();
+
+                //
+                // initialize the mission Player
+                // 
+                InitializeMission();
             }
-
-            //
-            // display introductory message
-            //
-            _gameConsoleView.DisplayGamePlayScreen("Mission Intro", Text.GameIntro(), ActionMenu.MissionIntro, "");
-            _gameConsoleView.GetContinueKey();
-
-            //
-            // initialize the mission Player
-            // 
-            InitializeMission();
-
+            else
+            {
+                _playingGame = true;
+                InitializeMission(true);
+            }
             //
             // prepare game play screen
             //
@@ -207,16 +216,28 @@ namespace NucleusLabs
         /// <summary>
         /// initialize the player info
         /// </summary>
-        private void InitializeMission()
+        private void InitializeMission(bool testdata = false)
         {
-            Player Player = _gameConsoleView.GetInitialPlayerInfo();
-            Player AI = _gameConsoleView.GetInitialAIInfo();
-            _gamePlayer.Name = Player.Name;
-            _gamePlayer.Gender = Player.Gender;
-            _gamePlayer.TravelTo(611, _gameMap);
-            _gameAI.Name = AI.Name;
-            _gameAI.Gender = AI.Gender;
-            _gameAI.UpdateLocation(411);
+            if (testdata)
+            {
+                _gamePlayer.Name = "Joe";
+                _gamePlayer.Gender = Player.Genders.Male;
+                _gamePlayer.TravelTo(611, _gameMap);
+                _gameAI.Name = "Sue";
+                _gameAI.Gender = Player.Genders.Female;
+                _gameAI.UpdateLocation(411);
+            }
+            else
+            {
+                Player Player = _gameConsoleView.GetInitialPlayerInfo();
+                Player AI = _gameConsoleView.GetInitialAIInfo();
+                _gamePlayer.Name = Player.Name;
+                _gamePlayer.Gender = Player.Gender;
+                _gamePlayer.TravelTo(611, _gameMap);
+                _gameAI.Name = AI.Name;
+                _gameAI.Gender = AI.Gender;
+                _gameAI.UpdateLocation(411);
+            }
         }
 
         #endregion
