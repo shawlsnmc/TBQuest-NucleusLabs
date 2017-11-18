@@ -2,4 +2,9 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+.vs/
 /.vs/
+NucleusLabs/bin/
+/NucleusLabs/obj/
+/NucleusLabs/bin/
+NucleusLabs/obj/
