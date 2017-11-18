@@ -66,9 +66,9 @@ namespace NucleusLabs
         {
             PlayerAction PlayerActionChoice = PlayerAction.None;
 
-
-            if (false)
-            { // set to true to show start screens
+            bool skipintro = false; // set to true to show start screens
+            if (skipintro)
+            {
 
                 //
                 // display splash screen
