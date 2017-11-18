@@ -97,7 +97,7 @@ namespace NucleusLabs
 
 
 
-            ConsoleKeyInfo keyPressedInfo = Console.ReadKey();
+            ConsoleKeyInfo keyPressedInfo = Console.ReadKey(true);
 
             if (getNavigation == true) {
                 switch (keyPressedInfo.Key)
@@ -130,7 +130,11 @@ namespace NucleusLabs
                 // TODO validate menu choices
                 //
                 char keyPressed = keyPressedInfo.KeyChar;
-                choosenAction = menu.MenuChoices[keyPressed];
+                menu.MenuChoices.TryGetValue(keyPressed, out choosenAction);
+                //if(!menu.MenuChoices.TryGetValue(keyPressed, out choosenAction))
+                //{
+                //    choosenAction = PlayerAction.None;
+                //}
             }
             return choosenAction;
         }
@@ -304,53 +308,97 @@ namespace NucleusLabs
                 }
             }
 
-            topRow++;
-            Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 2, topRow++);
-            Console.BackgroundColor = ConsoleTheme.MenuBorderColor;
-            Console.ForegroundColor = ConsoleTheme.MenuForegroundColor;
-            Console.Write(ConsoleWindowHelper.Center("Available Navigation", ConsoleLayout.MenuBoxWidth - 4));
-            Console.BackgroundColor = ConsoleTheme.MenuBackgroundColor;
-            Console.ForegroundColor = ConsoleTheme.MenuForegroundColor;
+
 
             availableNavigation = availableNavigation ?? new bool[6];
 
-            Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
+            bool hasNav = false;
+            List<string> NavigationMenu = new List<string> { };
+
+            //Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
             if (availableNavigation[0] == true) //North
-            {                
-                Console.Write("Up Arrow    - Travel North");
+            {
+                NavigationMenu.Add("Up Arrow    - Travel North");
+                hasNav = true;
+            }
+            else
+            {
+                NavigationMenu.Add("            - Travel North");
             }
 
-            Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
+            //Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
             if (availableNavigation[1] == true) //South
             {
-                Console.Write("Down Arrow  - Travel South");
+                NavigationMenu.Add("Down Arrow  - Travel South");
+                hasNav = true;
+            }
+            else
+            {
+                NavigationMenu.Add("            - Travel South");
             }
 
-            Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
+            //Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
             if (availableNavigation[2] == true) //East
             {
-                Console.Write("Right Arrow - Travel East");
+                NavigationMenu.Add("Right Arrow - Travel East");
+                hasNav = true;
+            }
+            else
+            {
+                NavigationMenu.Add("            - Travel East");
             }
 
-            Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
+            //Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
             if (availableNavigation[3] == true) //West
             {
-                Console.Write("Left Arrow  - Travel West");
+                NavigationMenu.Add("Left Arrow  - Travel West");
+                hasNav = true;
+            }
+            else
+            {
+                NavigationMenu.Add("            - Travel West");
             }
 
-            Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
+            //Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
             if (availableNavigation[4] == true) //Up
             {
-                Console.Write("Page Up     - Travel Up");
+                NavigationMenu.Add("Page Up     - Travel Up");
+                hasNav = true;
+            }
+            else
+            {
+                NavigationMenu.Add("            - Travel Up");
             }
 
-            Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
+            //Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
             if (availableNavigation[5] == true) //Down
             {
-                Console.Write("Page Down   - Travel Down");
+                NavigationMenu.Add("Page Down   - Travel Down");
+                hasNav = true;
+            }
+            else
+            {
+                NavigationMenu.Add("            - Travel Down");
             }
 
-
+            if (hasNav)
+            {
+                topRow++;
+                topRow++;
+                Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 2, topRow++);
+                Console.BackgroundColor = ConsoleTheme.MenuBorderColor;
+                Console.ForegroundColor = ConsoleTheme.MenuForegroundColor;
+                Console.Write(ConsoleWindowHelper.Center("Available Navigation", ConsoleLayout.MenuBoxWidth - 4));
+                Console.BackgroundColor = ConsoleTheme.MenuBackgroundColor;
+                Console.ForegroundColor = ConsoleTheme.MenuForegroundColor;
+                topRow++;
+                foreach (string menuItem in NavigationMenu)
+                {
+                    Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, topRow++);
+                    Console.WriteLine(menuItem);
+                }
+                
+            }
 
 
         }

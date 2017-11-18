@@ -51,10 +51,13 @@
     <Compile Include="ConsoleUtilities\ConsoleWindowHelper.cs" />
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Models\Character.cs" />
+    <Compile Include="Models\UselessItem.cs" />
+    <Compile Include="Models\GameObject.cs" />
     <Compile Include="Models\GameMap.cs" />
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\PlayerAction.cs" />
+    <Compile Include="Models\Universe.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\ConsoleView.cs" />

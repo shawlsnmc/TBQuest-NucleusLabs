@@ -38,7 +38,8 @@ namespace NucleusLabs
             MenuChoices = new Dictionary<char, PlayerAction>()
                 {
                     { '1', PlayerAction.PlayerInfo },
-                    { '2', PlayerAction.Exit }
+                    { '2', PlayerAction.LookAround },
+                    { '0', PlayerAction.Exit }
                 }
         };
     }

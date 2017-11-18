@@ -36,7 +36,7 @@ namespace NucleusLabs
         
 
 
-        public bool InNPC
+        public bool IsNPC
         {
             get { return _isNPC; }
             set { _isNPC = value; }

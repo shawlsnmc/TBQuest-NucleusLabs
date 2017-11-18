@@ -21,25 +21,24 @@ namespace NucleusLabs
             string messageBoxText =
             "You wake up with no clue where you are or why you are locked in this room. " +
             "You remember you were with your best friend before whatever happened that got you into this mess. "+
-            "You will need to look for clues and solve puzzles in order to rescue your friend and yourself. "+
+            "You will need to look for clues and solve puzzles in order to rescue your friend and yourself. \n"+
             " \n" +
-            "Keep an eye on your health meter, if it hits 0, it's game over."+
-            " \n" +
-            "Press the Esc key to exit the game at any point.\n" +
-            " \n" +
-            "\tFirst I need to get some inforamion from you so the narrative doesn't sound completely stupid.\n" +
-            " \n" +
-            "\tPress any key to begin.\n";
+            "Press any key to continue.\n";
 
             return messageBoxText;
         }
 
-        public static string CurrrentLocationInfo()
+        public static string CurrrentLocationInfo(int LocationID,GameMap Map)
         {
+            string locationName = Map.GetLocationName(LocationID);
+            string locationDesc = Map.GetLocationDescription(LocationID);
             string messageBoxText =
-            "Wakey Wakey!\n" +
+
+            $"Your Current Location: {locationName}\n" +
             " \n" +
-            "\tChoose from the menu options to proceed.\n";
+            $"{locationDesc}\n"+
+            " \n"+
+            "Choose from the menu options to proceed.\n";
 
             return messageBoxText;
         }
@@ -49,9 +48,14 @@ namespace NucleusLabs
         public static string InitializeMissionIntro()
         {
             string messageBoxText =
-                "Before you begin I need some required information. Please enter all the required information on the following screens.\n" +
+            "Keep an eye on your health meter, if it hits 0, it's game over." +
+            " \n" +
+            "Press the Esc key to exit the game at any point.\n" +
+            " \n" +
+            "First I need to get some information from you so the narrative doesn't sound completely stupid.\n" +
+                "Please enter all the required information on the following screens.\n" +
                 " \n" +
-                "\tPress any key to begin.";
+                "Press any key to begin.";
 
             return messageBoxText;
         }
@@ -148,10 +152,11 @@ namespace NucleusLabs
                 "\n"+
                 $"\tPlayer Name: {gamePlayer.Name}\n" +
                 $"\tPlayer Gender: {gamePlayer.Gender}\n" +
-                $"\tPlayer Location: {gamePlayer.LocationID}\n" +
+                $"\tPlayer Location: {gamePlayer.LocationID} *\n" +
                 $"\tPlayer Health: {gamePlayer.Health}\n" +
                 $"\tPlayer XP: {gamePlayer.Xp}\n" +
-                " \n";
+                " \n" +
+                "\t* Temp for testing";
 
             return messageBoxText;
         }

@@ -112,7 +112,7 @@ namespace NucleusLabs
         //
         // status box configuration
         //
-        public static int StatusBoxWidth = 30;
+        public static int StatusBoxWidth = 32;
         public static int StatusBoxHeight = WindowHeight - (HeaderHeight + FooterHeight);
         public static int StatusBoxPositionLeft = 1; //was 122
         public static int StatusBoxPositionTop = 3; //was 23
