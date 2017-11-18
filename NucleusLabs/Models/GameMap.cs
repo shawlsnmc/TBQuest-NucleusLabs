@@ -219,20 +219,20 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
 
             result = mapdata.Select("LocationID = 615");
-            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Bath Room";
+            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BathRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North and West with the room continuing to the East and a door to the South.";
             result[0][result[0].Table.Columns["LocationWestAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
 
             result = mapdata.Select("LocationID = 616");
-            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Bath Room";
+            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BathRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North, South, and East with the room continuing to the West.";
             result[0][result[0].Table.Columns["LocationSouthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
 
 
             result = mapdata.Select("LocationID = 621");
-            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Bed Room";
+            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BedRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North and West with the room continuing to the South and a door the the East.";
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
@@ -262,7 +262,7 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
 
             result = mapdata.Select("LocationID = 626");
-            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Bed Room";
+            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BedRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North, East, and West with the room continuing to the South.";
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationWestAccessible"].Ordinal] = false;
@@ -270,7 +270,7 @@ namespace NucleusLabs
 
 
             result = mapdata.Select("LocationID = 631");
-            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Bed Room";
+            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BedRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the East, South, and West and the room continuing to the North.";
             result[0][result[0].Table.Columns["LocationEastAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationSouthAccessible"].Ordinal] = false;
@@ -304,14 +304,14 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
 
             result = mapdata.Select("LocationID = 636");
-            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Bed Room";
+            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BedRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Wall to the South and East with a door to the West and the room continuing to the North.";
             result[0][result[0].Table.Columns["LocationSouthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
 
 
             result = mapdata.Select("LocationID = 641");
-            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Bed Room";
+            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BedRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North, East, and West with the room continuing to the South.";
             result[0][result[0].Table.Columns["LocationEastAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
@@ -344,14 +344,14 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
 
             result = mapdata.Select("LocationID = 646");
-            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Bed Room";
+            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BedRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North and East with a door to the West and room continues to the South.";
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
 
 
             result = mapdata.Select("LocationID = 651");
-            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Bed Room";
+            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BedRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to hte South and West with a door to the East and room continues to the North.";
             result[0][result[0].Table.Columns["LocationSouthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
@@ -380,7 +380,7 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
 
             result = mapdata.Select("LocationID = 656");
-            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Bed Room";
+            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BedRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the East, South, and West and the room continuing to the North.";
             result[0][result[0].Table.Columns["LocationWestAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationSouthAccessible"].Ordinal] = false;
@@ -388,13 +388,13 @@ namespace NucleusLabs
             
 
             result = mapdata.Select("LocationID = 661");
-            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Bath Room";
+            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BathRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North, South, and West and the room continues to the East.";
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
 
             result = mapdata.Select("LocationID = 662");
-            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Bath Room";
+            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BathRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the East and South with a door to the North and room continues to the West.";
             result[0][result[0].Table.Columns["LocationEastAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
@@ -420,7 +420,7 @@ namespace NucleusLabs
 
             result = mapdata.Select("LocationID = 666");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "";
-            result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "";
+            result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North, East, and South.  The room continues to the West. However, there is a hole in the ceiling that looks like a ladder once hung but only the brackets remain.";
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
 
 
