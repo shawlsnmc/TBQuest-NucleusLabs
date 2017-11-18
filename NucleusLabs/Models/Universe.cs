@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NucleusLabs
 {
-    class Universe
+    public class Universe
     {
 
         //
@@ -19,13 +19,13 @@ namespace NucleusLabs
             get { _lastID++; return _lastID; }
         }
 
-        private List<GameObject> _gameObjects;
+        public List<GameObject> GameObjects  = new List<GameObject>();
         
-        public List<GameObject> GameObjects
-        {
-            get { return _gameObjects; }
-            set { _gameObjects = value; }
-        }
+     //   public List<GameObject> GameObjects
+     //   {
+     //       get { return _gameObjects; }
+     //       set { _gameObjects = value; }
+     //   }
 
 
 
@@ -64,16 +64,28 @@ namespace NucleusLabs
             //create useless game objects
             Random rand = new Random();
 
-            for (int i = 0; i < 500; i++)
+            for (int i = 0; i < 200; i++)
             {
                 int UselessID = rand.Next(0, UselessItemNames.Count);
-                //this.GameObjects.Add(new UselessItem { })
+
+                UselessItem item = new UselessItem {
+                    ObjectID = this.LastID,
+                    LocationID = (rand.Next(1, 7) * 100) + (rand.Next(1, 7) * 10) + rand.Next(1, 7),
+                    Name = UselessItemNames[UselessID],
+                    Description = UselessItemNames[UselessID],
+                    Consumable = false,
+                    CanAddToInventory = true
+                };
+
+
+
+                GameObjects.Add(item);
             }
             
 
             //this.GameObjects.Add(new GameObject { })
 
-            //NAKUPENDA!!!
+            
         }
     }
 }

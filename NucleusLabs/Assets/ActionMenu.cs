@@ -27,7 +27,7 @@ namespace NucleusLabs
             MenuTitle = "Initialize Mission",
             MenuChoices = new Dictionary<char, PlayerAction>()
                 {
-                    { '1', PlayerAction.Exit }
+                    { '0', PlayerAction.Exit }
                 }
         };
 
@@ -39,6 +39,7 @@ namespace NucleusLabs
                 {
                     { '1', PlayerAction.PlayerInfo },
                     { '2', PlayerAction.LookAround },
+                    { '9', PlayerAction.Admin },
                     { '0', PlayerAction.Exit }
                 }
         };

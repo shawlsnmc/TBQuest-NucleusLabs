@@ -28,17 +28,74 @@ namespace NucleusLabs
             return messageBoxText;
         }
 
-        public static string CurrrentLocationInfo(int LocationID,GameMap Map)
+        public static string CurrentLocationInfo(int LocationID,GameMap Map, IEnumerable<GameObject> gameObjects)
         {
+             
             string locationName = Map.GetLocationName(LocationID);
             string locationDesc = Map.GetLocationDescription(LocationID);
             string messageBoxText =
 
             $"Your Current Location: {locationName}\n" +
             " \n" +
-            $"{locationDesc}\n"+
-            " \n"+
-            "Choose from the menu options to proceed.\n";
+            $"{locationDesc}\n" +
+            " \n" +
+            "Looking around you notice the following items\n\n";
+
+
+            messageBoxText +=
+                "ID".PadRight(10) +
+                "Name".PadRight(30) + "\n" +
+                "---".PadRight(10) +
+                "----------------------".PadRight(30) + "\n";
+            
+            //foreach (GameObject gameObject in gameObjects) 
+            foreach(var gameObject in gameObjects.Where(b => b.LocationID == LocationID))
+            {
+                messageBoxText +=
+                    $"{gameObject.ObjectID}".PadRight(10) +
+                    $"{gameObject.Name}".PadRight(30) +
+                    Environment.NewLine;
+            }
+
+            messageBoxText += "Choose from the menu options to proceed.\n";
+
+            return messageBoxText;
+        }
+
+
+        public static string AdminInfo(int LocationID, GameMap Map, IEnumerable<GameObject> gameObjects)
+        {
+
+            string locationName = Map.GetLocationName(LocationID);
+            string locationDesc = Map.GetLocationDescription(LocationID);
+            string messageBoxText =
+
+            $"Your Current Location: {locationName}\n" +
+            " \n" +
+            $"{locationDesc}\n" +
+            " \n" +
+            "Looking around you notice the following items\n\n";
+
+
+            messageBoxText +=
+                "ID".PadRight(10) +
+                "Name".PadRight(30) + 
+                "Location".PadRight(10) + "\n" +
+                "---".PadRight(10) +
+                "----------------------".PadRight(30) + 
+                "---".PadRight(10) + "\n";
+
+            //foreach (GameObject gameObject in gameObjects) 
+            foreach (var gameObject in gameObjects)
+            {
+                messageBoxText +=
+                    $"{gameObject.ObjectID}".PadRight(10) +
+                    $"{gameObject.Name}".PadRight(30) +
+                    $"{gameObject.LocationID}".PadRight(10) +
+                    Environment.NewLine;
+            }
+
+            messageBoxText += "Choose from the menu options to proceed.\n";
 
             return messageBoxText;
         }

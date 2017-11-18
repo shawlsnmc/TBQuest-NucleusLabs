@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NucleusLabs
 {
-    class UeslessItem : GameObject
+    public class UselessItem : GameObject
     { 
 
     }

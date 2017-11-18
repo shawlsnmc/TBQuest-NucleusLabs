@@ -12,6 +12,7 @@ namespace NucleusLabs
     public enum PlayerAction
     {
         None,
+        Admin,
         MissionSetup,
         LookAround,
         LookAt,

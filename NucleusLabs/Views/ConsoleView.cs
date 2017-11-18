@@ -11,7 +11,7 @@ namespace NucleusLabs
     /// </summary>
     public class ConsoleView
     {
-        #region ENUMS
+       
 
         private enum ViewStatus
         {
@@ -19,10 +19,9 @@ namespace NucleusLabs
             PlayingGame
         }
 
-        #endregion
+       
 
-        #region FIELDS
-
+       
         //
         // declare game objects for the ConsoleView object to use
         //
@@ -30,13 +29,11 @@ namespace NucleusLabs
 
         ViewStatus _viewStatus;
 
-        #endregion
+       
 
-        #region PROPERTIES
+       
 
-        #endregion
-
-        #region CONSTRUCTORS
+      
 
         /// <summary>
         /// default constructor to create the console view objects
@@ -50,9 +47,8 @@ namespace NucleusLabs
             InitializeDisplay();
         }
 
-        #endregion
-
-        #region METHODS
+       
+        
         /// <summary>
         /// display all of the elements on the game play screen on the console
         /// </summary>
@@ -501,7 +497,7 @@ namespace NucleusLabs
                 Console.BackgroundColor = ConsoleTheme.StatusBoxBorderColor;
                 Console.ForegroundColor = ConsoleTheme.StatusBoxForegroundColor;
                 Console.SetCursorPosition(ConsoleLayout.StatusBoxPositionLeft + 2, ConsoleLayout.StatusBoxPositionTop + 1);
-                Console.Write(ConsoleWindowHelper.Center("WTF", ConsoleLayout.StatusBoxWidth - 4));
+                Console.Write(ConsoleWindowHelper.Center("", ConsoleLayout.StatusBoxWidth - 4));
                 Console.BackgroundColor = ConsoleTheme.StatusBoxBackgroundColor;
                 Console.ForegroundColor = ConsoleTheme.StatusBoxForegroundColor;
             }
@@ -658,15 +654,14 @@ namespace NucleusLabs
             _viewStatus = ViewStatus.PlayingGame;
         }
 
-        #region ----- display responses to menu action choices -----
 
         public void DisplayPlayerInfo()
         {
             DisplayGamePlayScreen("Player Information", Text.PlayerInfo(_gamePlayer), ActionMenu.MainMenu, "");
         }
 
-        #endregion
+    
 
-        #endregion
+  
     }
 }
