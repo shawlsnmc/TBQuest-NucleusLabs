@@ -39,6 +39,10 @@ namespace NucleusLabs
                 {
                     { '1', PlayerAction.PlayerInfo },
                     { '2', PlayerAction.LookAround },
+                    { '3', PlayerAction.LookAt },
+                    { '4', PlayerAction.PickUpItem },
+                    { '5', PlayerAction.PutDownItem },
+                    
                     { '9', PlayerAction.Admin },
                     { '0', PlayerAction.Exit }
                 }

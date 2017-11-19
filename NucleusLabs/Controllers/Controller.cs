@@ -124,6 +124,20 @@ namespace NucleusLabs
                     case PlayerAction.Admin:
                         _gameConsoleView.DisplayGamePlayScreen("Admin Stuff", Text.AdminInfo(_gamePlayer.LocationID, _gameMap, _universe.GameObjects), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
                         break;
+                    case PlayerAction.LookAt:
+                        this.LookAtAction(_gamePlayer.LocationID);
+
+                        break;
+                    case PlayerAction.PickUpItem:
+
+                        break;
+                    case PlayerAction.PutDownItem:
+
+                        break;
+
+                    case PlayerAction.PlayerInventory:
+
+                        break;
 
                     case PlayerAction.Exit:
                         _playingGame = false;
@@ -235,6 +249,27 @@ namespace NucleusLabs
                 _gameAI.UpdateLocation(411);
             }
         }
+        private void LookAtAction(int locationID)
+        {
 
+
+           int gameObjectToLookAtId = _gameConsoleView.DisplayGetGameObjectToLookAt(_universe.GameObjects.Where(b => b.LocationID == locationID));
+
+            //
+            // display game object info
+            //
+            if (gameObjectToLookAtId != 0)
+            {
+                //
+                // get the game object from the universe
+                //
+                GameObject gameObject = _universe.GameObjects.Where(b => b.ObjectID == gameObjectToLookAtId).First();
+
+                //
+                // display information for the object chosen
+                //
+                _gameConsoleView.DisplayGameObjectInfo(gameObject);
+            }
+        }
     }
 }

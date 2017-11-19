@@ -445,6 +445,51 @@ namespace NucleusLabs
 
         }
 
+
+        public int DisplayGetGameObjectToLookAt(IEnumerable<GameObject> ListOfObjects)
+        {
+            int gameObjectId = 0;
+            bool validGamerObjectId = false;
+
+            
+            if (ListOfObjects.Count() > 0)
+            {
+                DisplayGamePlayScreen("Look at a Object", Text.GameObjectsChooseList(ListOfObjects), ActionMenu.MainMenu, "");
+
+                while (!validGamerObjectId)
+                {
+                    //
+                    // get an integer from the player
+                    //
+                    GetInteger($"Enter the Id number of the object you wish to look at: ", 0, 10000000, out gameObjectId);
+
+                    //
+                    // validate integer as a valid game object id and in current location
+                    //
+                    //if (_gameUniverse.IsValidGameObjectByLocationId(gameObjectId, _gameTraveler.SpaceTimeLocationId))
+                    //{
+                        validGamerObjectId = true;
+                   // }
+                    //else
+                    //{
+                    //    ClearInputBox();
+                    ///    DisplayInputErrorMessage("It appears you entered an invalid game object id. Please try again.");
+                    //}
+                }
+            }
+            else
+            {
+                DisplayGamePlayScreen("Look at a Object", "It appears there are no game objects here.", ActionMenu.MainMenu, "");
+            }
+
+            return gameObjectId;
+        }
+
+        public void DisplayGameObjectInfo(GameObject gameObject)
+        {
+            DisplayGamePlayScreen("Current Location", Text.LookAt(gameObject), ActionMenu.MainMenu, "");
+        }
+
         /// <summary>
         /// draw the status box on the game screen
         /// </summary>

@@ -57,10 +57,72 @@ namespace NucleusLabs
                     Environment.NewLine;
             }
 
-            messageBoxText += "Choose from the menu options to proceed.\n";
+            messageBoxText += "\nChoose from the menu options to proceed.\n";
 
             return messageBoxText;
         }
+
+
+        public static string GameObjectsChooseList(IEnumerable<GameObject> gameObjects)
+        {
+            //
+            // display table name and column headers
+            //
+            string messageBoxText =
+                "Objects here\n" +
+                " \n" +
+
+                //
+                // display table header
+                //
+                "ID".PadRight(10) +
+                "Name".PadRight(30) + "\n" +
+                "---".PadRight(10) +
+                "----------------------".PadRight(30) + "\n";
+
+            //
+            // display all traveler objects in rows
+            //
+            
+            foreach (GameObject gameObject in gameObjects)
+            {
+                messageBoxText +=
+                    $"{gameObject.ObjectID}".PadRight(10) +
+                    $"{gameObject.Name}".PadRight(30) +
+                    Environment.NewLine;
+            }
+
+            return messageBoxText;
+        }
+
+
+
+
+        public static string LookAt(GameObject gameObject)
+        {
+            string messageBoxText = "";
+
+            messageBoxText =
+                $"{gameObject.Name}\n" +
+                " \n" +
+                gameObject.Description + " \n" +
+                " \n";
+
+            messageBoxText += $"This item ";
+
+            if (gameObject.CanAddToInventory)
+            {
+                messageBoxText += "may be added to your inventory.";
+            }
+            else
+            {
+                messageBoxText += "may not be added to your inventory.";
+            }
+
+            return messageBoxText;
+        }
+
+
 
 
         public static string AdminInfo(int LocationID, GameMap Map, IEnumerable<GameObject> gameObjects)
