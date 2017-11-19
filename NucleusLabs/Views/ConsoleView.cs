@@ -446,40 +446,42 @@ namespace NucleusLabs
         }
 
 
-        public int DisplayGetGameObjectToLookAt(IEnumerable<GameObject> ListOfObjects)
+        public int DisplayGetGameObjectId(IEnumerable<GameObject> ListOfObjects)
         {
-            int gameObjectId = 0;
+            int gameObjectId = -1;
             bool validGamerObjectId = false;
 
             
             if (ListOfObjects.Count() > 0)
             {
-                DisplayGamePlayScreen("Look at a Object", Text.GameObjectsChooseList(ListOfObjects), ActionMenu.MainMenu, "");
+                DisplayGamePlayScreen("Select Object", Text.GameObjectsChooseList(ListOfObjects), ActionMenu.MainMenu, "");
 
                 while (!validGamerObjectId)
                 {
                     //
                     // get an integer from the player
                     //
-                    GetInteger($"Enter the Id number of the object you wish to look at: ", 0, 10000000, out gameObjectId);
+                    GetInteger($"Enter the Id number of the object you wish to select: ", 0, 10000000, out gameObjectId);
 
                     //
                     // validate integer as a valid game object id and in current location
                     //
-                    //if (_gameUniverse.IsValidGameObjectByLocationId(gameObjectId, _gameTraveler.SpaceTimeLocationId))
-                    //{
+
+                    
+                    if (ListOfObjects.Where(b => b.ObjectID == gameObjectId).Count() == 1)
+                    {
                         validGamerObjectId = true;
-                   // }
-                    //else
-                    //{
-                    //    ClearInputBox();
-                    ///    DisplayInputErrorMessage("It appears you entered an invalid game object id. Please try again.");
-                    //}
+                    }
+                    else
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("It appears you entered an invalid id. Please try again.");
+                    }
                 }
             }
             else
             {
-                DisplayGamePlayScreen("Look at a Object", "It appears there are no game objects here.", ActionMenu.MainMenu, "");
+                DisplayGamePlayScreen("Select Object", "It appears there are no game objects here.", ActionMenu.MainMenu, "");
             }
 
             return gameObjectId;

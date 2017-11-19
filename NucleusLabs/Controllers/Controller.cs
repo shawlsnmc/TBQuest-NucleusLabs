@@ -129,10 +129,10 @@ namespace NucleusLabs
 
                         break;
                     case PlayerAction.PickUpItem:
-
+                        this.PickUpAction(_gamePlayer.LocationID);
                         break;
                     case PlayerAction.PutDownItem:
-
+                        this.PutDownAction(_gamePlayer.LocationID);
                         break;
 
                     case PlayerAction.PlayerInventory:
@@ -253,7 +253,7 @@ namespace NucleusLabs
         {
 
 
-           int gameObjectToLookAtId = _gameConsoleView.DisplayGetGameObjectToLookAt(_universe.GameObjects.Where(b => b.LocationID == locationID));
+           int gameObjectToLookAtId = _gameConsoleView.DisplayGetGameObjectId(_universe.GameObjects.Where(b => b.LocationID == locationID));
 
             //
             // display game object info
@@ -269,6 +269,26 @@ namespace NucleusLabs
                 // display information for the object chosen
                 //
                 _gameConsoleView.DisplayGameObjectInfo(gameObject);
+            }
+        }
+        private void PickUpAction(int locationID)
+        {
+            int gameObjectToPickUp = _gameConsoleView.DisplayGetGameObjectId(_universe.GameObjects.Where(b => b.LocationID == locationID));
+            if (gameObjectToPickUp >= 0) {
+                GameObject gameObject = _universe.GameObjects.Where(b => b.ObjectID == gameObjectToPickUp).First();
+                gameObject.LocationID = -1;
+                _gameConsoleView.DisplayGamePlayScreen("Pick Up Object", $"The object has been added to your inventory.", ActionMenu.MainMenu, "");
+            }
+        }
+
+        private void PutDownAction(int locationID)
+        {
+            int gameObjectId = _gameConsoleView.DisplayGetGameObjectId(_universe.GameObjects.Where(b => b.LocationID == -1));
+            if (gameObjectId >= 0)
+            {
+                GameObject gameObject = _universe.GameObjects.Where(b => b.ObjectID == gameObjectId).First();
+                gameObject.LocationID = locationID;
+                _gameConsoleView.DisplayGamePlayScreen("Put Down Object", $"The object has been removed from your inventory.", ActionMenu.MainMenu, "");
             }
         }
     }

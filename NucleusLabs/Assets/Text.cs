@@ -54,7 +54,7 @@ namespace NucleusLabs
                 messageBoxText +=
                     $"{gameObject.ObjectID}".PadRight(10) +
                     $"{gameObject.Name}".PadRight(30) +
-                    Environment.NewLine;
+                    "\n";
             }
 
             messageBoxText += "\nChoose from the menu options to proceed.\n";
@@ -105,7 +105,7 @@ namespace NucleusLabs
             messageBoxText =
                 $"{gameObject.Name}\n" +
                 " \n" +
-                gameObject.Description + " \n" +
+                "You look at the " + gameObject.Description + " \n" +
                 " \n";
 
             messageBoxText += $"This item ";
@@ -121,6 +121,7 @@ namespace NucleusLabs
 
             return messageBoxText;
         }
+
 
 
 
