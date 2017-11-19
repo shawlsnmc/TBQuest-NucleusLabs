@@ -144,7 +144,7 @@ namespace NucleusLabs
                     ObjectID = this.LastID,
                     LocationID = (rand.Next(1, 7) * 100) + (rand.Next(1, 7) * 10) + rand.Next(1, 7),
                     Name = UselessItemNames[UselessID],
-                    Description = UselessItemDesc[UselessID],
+                    Description = UselessItemDescriptions[UselessID],
                     Consumable = false,
                     CanAddToInventory = true
                 };
