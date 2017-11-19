@@ -100,10 +100,22 @@ namespace NucleusLabs
             //
             while (_playingGame)
             {
+
+                //Make sure player is still alive.
+
+                if (_gamePlayer.Health == 0)
+                {
+                    //dead player
+                    _gameConsoleView.GetContinueKey();
+                    _gameConsoleView.DisplayGamePlayScreen("YOU DIED!!!", Text.YouDied(_gamePlayer,_gameAI), ActionMenu.MissionIntro, "");
+                    _gameConsoleView.GetContinueKey();
+                    Environment.Exit(1);
+                }
+
                 //
                 // get next game action from player
                 //
-                PlayerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.MainMenu, true);
+                    PlayerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.MainMenu, true);
 
                 //
                 // choose an action based on the player's menu choice
@@ -276,8 +288,26 @@ namespace NucleusLabs
             int gameObjectToPickUp = _gameConsoleView.DisplayGetGameObjectId(_universe.GameObjects.Where(b => b.LocationID == locationID));
             if (gameObjectToPickUp >= 0) {
                 GameObject gameObject = _universe.GameObjects.Where(b => b.ObjectID == gameObjectToPickUp).First();
-                gameObject.LocationID = -1;
-                _gameConsoleView.DisplayGamePlayScreen("Pick Up Object", $"The object has been added to your inventory.", ActionMenu.MainMenu, "");
+                if (gameObject.GetType() == typeof(ConsumableItem))
+                {
+                    //item is a consumable
+                    if (gameObject.Consumable == true)
+                    {
+                        gameObject.LocationID = 0;
+                        _gamePlayer.Health += (gameObject as ConsumableItem).HealthPoints;
+                        _gameConsoleView.DisplayGamePlayScreen("Consumed Item", $"You consumed the {gameObject.Name} and it gave you {(gameObject as ConsumableItem).HealthPoints} HP.", ActionMenu.MainMenu, "");
+                    }
+                    else
+                    {
+                        gameObject.LocationID = -1;
+                        _gameConsoleView.DisplayGamePlayScreen("Pick Up Object", $"The object has been added to your inventory.", ActionMenu.MainMenu, "");
+                    }
+                }
+                else
+                {
+                    gameObject.LocationID = -1;
+                    _gameConsoleView.DisplayGamePlayScreen("Pick Up Object", $"The object has been added to your inventory.", ActionMenu.MainMenu, "");
+                }
             }
         }
 

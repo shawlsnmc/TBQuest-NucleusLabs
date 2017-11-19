@@ -295,5 +295,19 @@ namespace NucleusLabs
 
             return statusBoxText;
         }
+
+        public static string YouDied(Player gamePlayer, Player gamePlayerAI)
+        {
+            string messageBoxText =
+                $"{gamePlayer.Name}, I thought I told you to keep an eye on your health meter!\n" +
+                " \n" +
+                $"Oh well, looks like {gamePlayerAI.Name} gets to stay here with me. MUHAHAHA!\n" +
+                " \n" +
+                "Better luck next time." +
+                " \n";
+            
+            return messageBoxText;
+        }
+
     }
 }

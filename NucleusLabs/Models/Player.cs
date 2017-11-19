@@ -28,7 +28,20 @@ namespace NucleusLabs
         public int Health
         {
             get { return _health; }
-            set { _health = value; }
+            set {
+                    if (value < 1)
+                    {
+                        //player died
+                        _health = 0;
+                    }else if (value > 100)
+                    {
+                        _health = 100;
+                    }
+                    else
+                    {
+                        _health = value;
+                    }
+                }
         }
 
         public int Xp { get; set; }
