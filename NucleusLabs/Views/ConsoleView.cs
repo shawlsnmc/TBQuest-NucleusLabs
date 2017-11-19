@@ -446,7 +446,7 @@ namespace NucleusLabs
         }
 
 
-        public int DisplayGetGameObjectId(IEnumerable<GameObject> ListOfObjects)
+        public int DisplayGetGameObjectId(IEnumerable<GameObject> ListOfObjects, Menu menu)
         {
             int gameObjectId = -1;
             bool validGamerObjectId = false;
@@ -454,7 +454,7 @@ namespace NucleusLabs
             
             if (ListOfObjects.Count() > 0)
             {
-                DisplayGamePlayScreen("Select Object", Text.GameObjectsChooseList(ListOfObjects), ActionMenu.MainMenu, "");
+                DisplayGamePlayScreen("Select Object", Text.GameObjectsChooseList(ListOfObjects), menu, "");
 
                 while (!validGamerObjectId)
                 {
@@ -467,8 +467,11 @@ namespace NucleusLabs
                     // validate integer as a valid game object id and in current location
                     //
 
-                    
-                    if (ListOfObjects.Where(b => b.ObjectID == gameObjectId).Count() == 1)
+                    if (gameObjectId == 0)
+                    {
+                        validGamerObjectId = true;
+                        ClearInputBox();
+                    }else if (ListOfObjects.Where(b => b.ObjectID == gameObjectId).Count() == 1)
                     {
                         validGamerObjectId = true;
                     }
@@ -481,15 +484,16 @@ namespace NucleusLabs
             }
             else
             {
-                DisplayGamePlayScreen("Select Object", "It appears there are no game objects here.", ActionMenu.MainMenu, "");
+                DisplayGamePlayScreen("Select Object", "It appears there are no game objects here.", menu, "");
+                gameObjectId = 0;
             }
 
             return gameObjectId;
         }
 
-        public void DisplayGameObjectInfo(GameObject gameObject)
+        public void DisplayGameObjectInfo(GameObject gameObject, Menu menu)
         {
-            DisplayGamePlayScreen("Current Location", Text.LookAt(gameObject), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen("Current Location", Text.LookAt(gameObject), menu, "");
         }
 
         /// <summary>

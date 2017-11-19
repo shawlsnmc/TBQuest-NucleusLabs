@@ -9,7 +9,7 @@ namespace NucleusLabs
     /// <summary>
     /// controller for the MVC pattern in the application
     /// </summary>
-    public class Controller
+    public partial class Controller
     {
 
 
@@ -78,6 +78,7 @@ namespace NucleusLabs
                 //
                 // display introductory message
                 //
+                ActionMenu.currentMenu = ActionMenu.CurrentMenu.MissionIntro;
                 _gameConsoleView.DisplayGamePlayScreen("Mission Intro", Text.GameIntro(), ActionMenu.MissionIntro, "");
                 _gameConsoleView.GetContinueKey();
 
@@ -93,6 +94,7 @@ namespace NucleusLabs
             //
             // prepare game play screen
             //
+            ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
             _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_gamePlayer.LocationID, _gameMap, _universe.GameObjects), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
 
             //
@@ -107,6 +109,7 @@ namespace NucleusLabs
                 {
                     //dead player
                     _gameConsoleView.GetContinueKey();
+                    ActionMenu.currentMenu = ActionMenu.CurrentMenu.MissionIntro;
                     _gameConsoleView.DisplayGamePlayScreen("YOU DIED!!!", Text.YouDied(_gamePlayer,_gameAI), ActionMenu.MissionIntro, "");
                     _gameConsoleView.GetContinueKey();
                     Environment.Exit(1);
@@ -115,7 +118,18 @@ namespace NucleusLabs
                 //
                 // get next game action from player
                 //
-                    PlayerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.MainMenu, true);
+
+                switch (ActionMenu.currentMenu)
+                {
+                    case ActionMenu.CurrentMenu.MainMenu:
+                        PlayerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.MainMenu, true);
+                        break;
+                    case ActionMenu.CurrentMenu.InventoryMenu:
+                        PlayerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.InventoryMenu, true);
+                        break;
+                    default:
+                        break;
+                }
 
                 //
                 // choose an action based on the player's menu choice
@@ -126,29 +140,59 @@ namespace NucleusLabs
                         break;
 
                     case PlayerAction.PlayerInfo:
+                        ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
                         _gameConsoleView.DisplayPlayerInfo();
                         break;
 
                     case PlayerAction.LookAround:
+                    case PlayerAction.ReturnToMain:
+                        ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
                         _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_gamePlayer.LocationID, _gameMap, _universe.GameObjects), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
                         break;
 
                     case PlayerAction.Admin:
+                        ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
                         _gameConsoleView.DisplayGamePlayScreen("Admin Stuff", Text.AdminInfo(_gamePlayer.LocationID, _gameMap, _universe.GameObjects), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
                         break;
                     case PlayerAction.LookAt:
-                        this.LookAtAction(_gamePlayer.LocationID);
+                        if (ActionMenu.currentMenu == ActionMenu.CurrentMenu.MainMenu)
+                        {
+                            this.LookAtAction(_universe.GameObjects.Where(b => b.LocationID == _gamePlayer.LocationID), ActionMenu.MainMenu);
+                        }
+                        else if (ActionMenu.currentMenu == ActionMenu.CurrentMenu.InventoryMenu)
+                        {
+                            this.LookAtAction(_universe.GameObjects.Where(b => b.LocationID == -1), ActionMenu.InventoryMenu);
+                        }
 
                         break;
                     case PlayerAction.PickUpItem:
-                        this.PickUpAction(_gamePlayer.LocationID);
+                        if (ActionMenu.currentMenu == ActionMenu.CurrentMenu.MainMenu)
+                        {
+                            this.PickUpAction(_gamePlayer.LocationID, ActionMenu.MainMenu);
+                        }
+                        else if (ActionMenu.currentMenu == ActionMenu.CurrentMenu.InventoryMenu)
+                        {
+                            this.PickUpAction(_gamePlayer.LocationID, ActionMenu.InventoryMenu);
+                        }
                         break;
                     case PlayerAction.PutDownItem:
-                        this.PutDownAction(_gamePlayer.LocationID);
+                        if (ActionMenu.currentMenu == ActionMenu.CurrentMenu.MainMenu)
+                        {
+                            this.PutDownAction(_gamePlayer.LocationID, ActionMenu.MainMenu);
+                        }
+                        else if (ActionMenu.currentMenu == ActionMenu.CurrentMenu.InventoryMenu)
+                        {
+                            this.PutDownAction(_gamePlayer.LocationID, ActionMenu.InventoryMenu);
+                        }
+
+                        break;
+                    case PlayerAction.ConsumeItem:
+                        this.ConsumeAction(ActionMenu.InventoryMenu);
                         break;
 
                     case PlayerAction.PlayerInventory:
-
+                        ActionMenu.currentMenu = ActionMenu.CurrentMenu.InventoryMenu;
+                        _gameConsoleView.DisplayGamePlayScreen("Player Inventory", Text.PlayerInventory( _universe.GameObjects), ActionMenu.InventoryMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
                         break;
 
                     case PlayerAction.Exit:
@@ -160,6 +204,7 @@ namespace NucleusLabs
 
                         if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.North)){
                             _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.North),_gameMap);
+                            ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
                             _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_gamePlayer.LocationID, _gameMap, _universe.GameObjects), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
                             
                         }
@@ -171,6 +216,7 @@ namespace NucleusLabs
                     case PlayerAction.TravelSouth:
                         if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.South)){
                             _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.South),_gameMap);
+                            ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
                             _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_gamePlayer.LocationID, _gameMap, _universe.GameObjects), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
                             
                         }
@@ -182,6 +228,7 @@ namespace NucleusLabs
                     case PlayerAction.TravelEast:
                         if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.East)){
                             _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.East), _gameMap);
+                            ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
                             _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_gamePlayer.LocationID, _gameMap, _universe.GameObjects), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
                             
                         }
@@ -193,6 +240,7 @@ namespace NucleusLabs
                     case PlayerAction.TravelWest:
                         if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.West)){
                             _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.West), _gameMap);
+                            ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
                             _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_gamePlayer.LocationID, _gameMap, _universe.GameObjects), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
                             
                         }
@@ -204,6 +252,7 @@ namespace NucleusLabs
                     case PlayerAction.TravelUp:
                         if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.Up)){
                             _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.Up), _gameMap);
+                            ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
                             _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_gamePlayer.LocationID, _gameMap, _universe.GameObjects), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
                             
                         }
@@ -215,6 +264,7 @@ namespace NucleusLabs
                     case PlayerAction.TravelDown:
                         if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.Down)){
                             _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.Down), _gameMap);
+                            ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
                             _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_gamePlayer.LocationID, _gameMap, _universe.GameObjects), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
                             
                         }
@@ -261,11 +311,11 @@ namespace NucleusLabs
                 _gameAI.UpdateLocation(411);
             }
         }
-        private void LookAtAction(int locationID)
+        private void LookAtAction(IEnumerable<GameObject> gameObjects, Menu menu)
         {
 
 
-           int gameObjectToLookAtId = _gameConsoleView.DisplayGetGameObjectId(_universe.GameObjects.Where(b => b.LocationID == locationID));
+           int gameObjectToLookAtId = _gameConsoleView.DisplayGetGameObjectId(gameObjects, menu);
 
             //
             // display game object info
@@ -280,45 +330,47 @@ namespace NucleusLabs
                 //
                 // display information for the object chosen
                 //
-                _gameConsoleView.DisplayGameObjectInfo(gameObject);
+                _gameConsoleView.DisplayGameObjectInfo(gameObject, menu);
             }
         }
-        private void PickUpAction(int locationID)
+        private void PickUpAction(int locationID, Menu menu)
         {
-            int gameObjectToPickUp = _gameConsoleView.DisplayGetGameObjectId(_universe.GameObjects.Where(b => b.LocationID == locationID));
-            if (gameObjectToPickUp >= 0) {
+            int gameObjectToPickUp = _gameConsoleView.DisplayGetGameObjectId(_universe.GameObjects.Where(b => b.LocationID == locationID), menu);
+            if (gameObjectToPickUp > 0) {
                 GameObject gameObject = _universe.GameObjects.Where(b => b.ObjectID == gameObjectToPickUp).First();
-                if (gameObject.GetType() == typeof(ConsumableItem))
-                {
-                    //item is a consumable
-                    if (gameObject.Consumable == true)
-                    {
-                        gameObject.LocationID = 0;
-                        _gamePlayer.Health += (gameObject as ConsumableItem).HealthPoints;
-                        _gameConsoleView.DisplayGamePlayScreen("Consumed Item", $"You consumed the {gameObject.Name} and it gave you {(gameObject as ConsumableItem).HealthPoints} HP.", ActionMenu.MainMenu, "");
-                    }
-                    else
-                    {
-                        gameObject.LocationID = -1;
-                        _gameConsoleView.DisplayGamePlayScreen("Pick Up Object", $"The object has been added to your inventory.", ActionMenu.MainMenu, "");
-                    }
-                }
-                else
-                {
-                    gameObject.LocationID = -1;
-                    _gameConsoleView.DisplayGamePlayScreen("Pick Up Object", $"The object has been added to your inventory.", ActionMenu.MainMenu, "");
-                }
+                gameObject.LocationID = -1;
+                _gameConsoleView.DisplayGamePlayScreen("Pick Up Object", $"The object has been added to your inventory.", menu, "");
+                onItemPickUp(gameObject);
+
+
             }
         }
 
-        private void PutDownAction(int locationID)
+
+        private void ConsumeAction(Menu menu)
         {
-            int gameObjectId = _gameConsoleView.DisplayGetGameObjectId(_universe.GameObjects.Where(b => b.LocationID == -1));
-            if (gameObjectId >= 0)
+            int gameObjectToConsume = _gameConsoleView.DisplayGetGameObjectId(_universe.GameObjects.Where(b => b.LocationID == -1 && b.Consumable==true), menu);
+            if (gameObjectToConsume > 0)
+            {
+                GameObject gameObject = _universe.GameObjects.Where(b => b.ObjectID == gameObjectToConsume).First();
+                gameObject.LocationID = 0;
+                _gamePlayer.Health += (gameObject as ConsumableItem).HealthPoints;
+                _gameConsoleView.DisplayGamePlayScreen("Consumed Item", $"You consumed the {gameObject.Name} and it gave you {(gameObject as ConsumableItem).HealthPoints} HP.", menu, "");
+            }
+        }
+
+
+        
+
+        private void PutDownAction(int locationID, Menu menu)
+        {
+            int gameObjectId = _gameConsoleView.DisplayGetGameObjectId(_universe.GameObjects.Where(b => b.LocationID == -1),menu);
+            if (gameObjectId > 0)
             {
                 GameObject gameObject = _universe.GameObjects.Where(b => b.ObjectID == gameObjectId).First();
                 gameObject.LocationID = locationID;
-                _gameConsoleView.DisplayGamePlayScreen("Put Down Object", $"The object has been removed from your inventory.", ActionMenu.MainMenu, "");
+                _gameConsoleView.DisplayGamePlayScreen("Put Down Object", $"The object has been removed from your inventory.", menu, "");
+                onItemPutDown(gameObject);
             }
         }
     }

@@ -20,6 +20,7 @@ namespace NucleusLabs
         PutDownItem,
         PlayerInfo,
         PlayerInventory,
+        ConsumeItem,
         ListItems,
         TravelNorth,
         TravelSouth,
@@ -27,6 +28,7 @@ namespace NucleusLabs
         TravelWest,
         TravelUp,
         TravelDown,
+        ReturnToMain,
         Exit
     }
 }

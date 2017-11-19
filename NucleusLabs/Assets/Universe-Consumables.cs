@@ -26,7 +26,6 @@ namespace NucleusLabs
                     {0, 5 },
                     {1, 50 },
                     {2, -25}
-
                 };
 
     }

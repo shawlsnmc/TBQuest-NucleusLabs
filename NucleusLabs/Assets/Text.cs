@@ -309,5 +309,33 @@ namespace NucleusLabs
             return messageBoxText;
         }
 
+        public static string PlayerInventory(IEnumerable<GameObject> gameObjects)
+        {
+
+            string messageBoxText =
+                "Objects in your inventory\n" +
+                " \n" +
+
+                "ID".PadRight(10) +
+                "Name".PadRight(30) +
+                "Consumable".PadRight(3) + "\n" +
+                "---".PadRight(10) +
+                "----------------------".PadRight(30) +
+                "----------".PadRight(10) + "\n" + "\n";
+
+            foreach (var gameObject in gameObjects.Where(b => b.LocationID == -1))
+            {
+                messageBoxText +=
+                    $"{gameObject.ObjectID}".PadRight(10) +
+                    $"{gameObject.Name}".PadRight(30) +
+                    $"{gameObject.Consumable}".PadRight(10) +
+
+                    Environment.NewLine;
+            }
+
+            return messageBoxText;
+        }
+
+
     }
 }

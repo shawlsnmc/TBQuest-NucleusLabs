@@ -52,6 +52,7 @@
     <Compile Include="ConsoleUtilities\ConsoleWindowControl.cs" />
     <Compile Include="ConsoleUtilities\ConsoleWindowHelper.cs" />
     <Compile Include="Controllers\Controller.cs" />
+    <Compile Include="Controllers\OnEvents.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\ConsumableItem.cs" />
     <Compile Include="Models\UselessItem.cs" />
