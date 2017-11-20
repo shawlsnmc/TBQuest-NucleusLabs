@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace NucleusLabs
 {
-    public class UseFulItem : GameObject
+    public class UsefulItem : GameObject
     {
         public int XP { get; set; }
+        public int UsefulItemID { get; set; }
     }
 }

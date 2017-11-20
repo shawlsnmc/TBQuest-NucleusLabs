@@ -58,7 +58,7 @@ namespace NucleusLabs
         {
             PlayerAction PlayerActionChoice = PlayerAction.None;
 
-            bool skipintro = true; // set to true to show start screens
+            bool skipintro = false; // set to true to show start screens
             if (!skipintro)
             {
 
@@ -339,8 +339,9 @@ namespace NucleusLabs
             if (gameObjectToPickUp > 0) {
                 GameObject gameObject = _universe.GameObjects.Where(b => b.ObjectID == gameObjectToPickUp).First();
                 gameObject.LocationID = -1;
+                OnItemPickUp(gameObject, locationID);
                 _gameConsoleView.DisplayGamePlayScreen("Pick Up Object", $"The object has been added to your inventory.", menu, "");
-                onItemPickUp(gameObject);
+                
 
 
             }
@@ -355,6 +356,7 @@ namespace NucleusLabs
                 GameObject gameObject = _universe.GameObjects.Where(b => b.ObjectID == gameObjectToConsume).First();
                 gameObject.LocationID = 0;
                 _gamePlayer.Health += (gameObject as ConsumableItem).HealthPoints;
+                OnItemConsume(gameObject);
                 _gameConsoleView.DisplayGamePlayScreen("Consumed Item", $"You consumed the {gameObject.Name} and it gave you {(gameObject as ConsumableItem).HealthPoints} HP.", menu, "");
             }
         }
@@ -369,8 +371,9 @@ namespace NucleusLabs
             {
                 GameObject gameObject = _universe.GameObjects.Where(b => b.ObjectID == gameObjectId).First();
                 gameObject.LocationID = locationID;
+                OnItemPutDown(gameObject, locationID);
                 _gameConsoleView.DisplayGamePlayScreen("Put Down Object", $"The object has been removed from your inventory.", menu, "");
-                onItemPutDown(gameObject);
+                
             }
         }
     }

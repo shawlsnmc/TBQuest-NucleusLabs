@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NucleusLabs
 {
-    public class GameObject
+    public abstract class GameObject
     {
         public int ObjectID { get; set; }
         public int LocationID { get; set; } // -1 for player1 inventory, -2 for player2, 0 for removed from game

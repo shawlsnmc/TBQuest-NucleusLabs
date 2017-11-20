@@ -56,7 +56,7 @@ namespace NucleusLabs
                     {1, "empty pop can that is partly crushed." },
                     {2, "toilet paper cardboard roll that is falling apart." },
                     {3, "dirty red rag and notice a number sewn into the corner, 742695."},
-                    {4, "light bulb and descover that it is burnt out."},
+                    {4, "light bulb and discover that it is burnt out."},
                     {5, "spray paint can and find that it is empty."},
                     {6, "pillow that is falling apart and  faintly writen on it is the number, 843257."},
                     {7, "toothbrush that is very well used and turning green with mold."},

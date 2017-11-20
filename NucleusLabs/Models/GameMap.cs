@@ -134,7 +134,57 @@ namespace NucleusLabs
             DataRow[] result = this.MapData.Select("LocationID = " + locationID);
             result[0][result[0].Table.Columns["LocationVisitedByPlayer"].Ordinal] = true;
         }
-        
+
+        public void SetLocationDescription(int locationID,string Description)
+        {
+            DataRow[] result = this.MapData.Select("LocationID = " + locationID);
+            result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = Description;
+        }
+
+        public void SetLocationLock(int locationID, Direction direction, bool Accessible)
+        {
+            DataRow[] result = this.MapData.Select("LocationID = " + locationID);
+            switch (direction)
+            {
+                case Direction.Down:
+                    if ((int)result[0][result[0].Table.Columns["LocationDwonID"].Ordinal] != 0)
+                    {
+                        result[0][result[0].Table.Columns["LocationDownAccessible"].Ordinal] = Accessible;
+                    }
+                    break;
+                case Direction.Up:
+                    if ((int)result[0][result[0].Table.Columns["LocationUpID"].Ordinal] != 0)
+                    {
+                        result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = Accessible;
+                    }
+                    break;
+                case Direction.East:
+                    if ((int)result[0][result[0].Table.Columns["LocationEastID"].Ordinal] != 0)
+                    {
+                        result[0][result[0].Table.Columns["LocationEastAccessible"].Ordinal] = Accessible;
+                    }
+                    break;
+                case Direction.West:
+                    if ((int)result[0][result[0].Table.Columns["LocationWestID"].Ordinal] != 0)
+                    {
+                        result[0][result[0].Table.Columns["LocationWestAccessible"].Ordinal] = Accessible;
+                    }
+                    break;
+                case Direction.North:
+                    if ((int)result[0][result[0].Table.Columns["LocationNorthID"].Ordinal] != 0)
+                    {
+                        result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = Accessible;
+                    }
+                    break;
+                case Direction.South:
+                    if ((int)result[0][result[0].Table.Columns["LocationSouthID"].Ordinal] != 0)
+                    {
+                        result[0][result[0].Table.Columns["LocationSouthAccessible"].Ordinal] = Accessible;
+                    }
+                    break;
+            }
+        }
+
 
 
         static DataTable BuildMap()
@@ -422,7 +472,7 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North, East, and South.  The room continues to the West. However, there is a hole in the ceiling that looks like a ladder once hung but only the brackets remain.";
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
-
+            result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
 
 
 

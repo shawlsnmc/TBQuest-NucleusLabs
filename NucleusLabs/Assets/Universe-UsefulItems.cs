@@ -10,10 +10,11 @@ namespace NucleusLabs
     {
         private void InitializeUsefullGameObjects()
         {
-            GameObjects.Add(new UseFulItem
+            GameObjects.Add(new UsefulItem
             {
                 ObjectID = this.LastID,
                 LocationID = 641,
+                UsefulItemID= 1, 
                 Name = "Ladder",
                 Description = "8ft rusty ladder laying on the floor. It looks very sturdy but also very heavy",
                 Consumable = false,

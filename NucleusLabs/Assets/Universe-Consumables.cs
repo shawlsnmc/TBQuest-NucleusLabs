@@ -25,7 +25,7 @@ namespace NucleusLabs
                 {
                     {0, "sealed water bottle covered in dust." },
                     {1, "sealed health pack." },
-                    {2, "moldy cheese and think, hmmm protien and penicillin, Bonus!"},
+                    {2, "moldy cheese and think, hmmm protein and penicillin, Bonus!"},
                     {3, "jar and it is sealed and full of dried fruit."},
                     {4, "energy bar and find it still sealed."},
                     {5, "grenola bar and it is sealed and chocolate covered!"},

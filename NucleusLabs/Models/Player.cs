@@ -46,6 +46,8 @@ namespace NucleusLabs
 
         public int Xp { get; set; }
 
+        public double InventoryWeight { get; set; }
+
         public Genders Gender
         {
             get { return _gender; }
