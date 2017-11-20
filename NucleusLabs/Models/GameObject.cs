@@ -14,6 +14,9 @@ namespace NucleusLabs
         public virtual string Description { get; set; }
         public virtual bool Consumable { get; set; }
         public virtual bool CanAddToInventory { get; set; }
+        public virtual double Weight { get; set; }
+
+
 
     }
 

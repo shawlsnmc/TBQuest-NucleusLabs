@@ -41,14 +41,14 @@ namespace NucleusLabs
             //
             // add all of the universe objects to the game
             // 
-            IntializeGameObjects();
+            InitializeGameObjects();
         }
 
         
         /// <summary>
         /// initialize the universe with all of the space-time locations and game objects
         /// </summary>
-        private void IntializeGameObjects()
+        private void InitializeGameObjects()
         {
             //create useless game objects
             Random rand = new Random();
@@ -63,7 +63,8 @@ namespace NucleusLabs
                     Name = UselessItemNames[itemID],
                     Description = UselessItemDescriptions[itemID],
                     Consumable = false,
-                    CanAddToInventory = true
+                    CanAddToInventory = true,
+                    Weight = UselessItemWeight[itemID]
                 });
             }
 
@@ -79,11 +80,13 @@ namespace NucleusLabs
                     Description = ConsumableItemDescriptions[itemID],
                     Consumable = true,
                     CanAddToInventory = true,
-                    HealthPoints = ConsumableItemhealthpoints[itemID]
+                    HealthPoints = ConsumableItemhealthpoints[itemID],
+                    Weight = ConsumableItemWeight[itemID]
                 });
             }
 
-            //this.GameObjects.Add(new GameObject { })
+            //Useful, one of a kind items
+            InitializeUsefullGameObjects();
 
 
         }

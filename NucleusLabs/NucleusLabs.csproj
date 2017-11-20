@@ -46,6 +46,7 @@
     <Compile Include="Assets\ActionMenu.cs" />
     <Compile Include="Assets\Text.cs" />
     <Compile Include="Assets\Universe-Consumables.cs" />
+    <Compile Include="Assets\Universe-UsefulItems.cs" />
     <Compile Include="Assets\Universe-UselessItems.cs" />
     <Compile Include="ConsoleUtilities\ConsoleLayout.cs" />
     <Compile Include="ConsoleUtilities\ConsoleTheme.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Controllers\OnEvents.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\ConsumableItem.cs" />
+    <Compile Include="Models\UsefulItem.cs" />
     <Compile Include="Models\UselessItem.cs" />
     <Compile Include="Models\GameObject.cs" />
     <Compile Include="Models\GameMap.cs" />

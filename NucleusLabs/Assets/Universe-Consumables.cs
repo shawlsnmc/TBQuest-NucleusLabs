@@ -27,6 +27,12 @@ namespace NucleusLabs
                     {1, 50 },
                     {2, -25}
                 };
+        Dictionary<int, Double> ConsumableItemWeight = new Dictionary<int, Double>()
+                {
+                    {0, 2 },
+                    {1, 5 },
+                    {2, 1 }
+                };
 
     }
 }
