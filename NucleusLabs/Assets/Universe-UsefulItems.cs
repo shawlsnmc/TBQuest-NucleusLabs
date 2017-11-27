@@ -22,6 +22,32 @@ namespace NucleusLabs
                 Weight = 50,
                 XP = 50
             });
+            GameObjects.Add(new UsefulItem
+            {
+                ObjectID = this.LastID,
+                LocationID = 611,
+                UsefulItemID = 2,
+                Name = "Catnip",
+                Description = "Catnip infused cat treat, sample pack.",
+                Consumable = false,
+                CanAddToInventory = true,
+                Weight = 1,
+                XP = 0
+            });
+            GameObjects.Add(new UsefulItem
+            {
+                ObjectID = this.LastID,
+                LocationID = 624,
+                UsefulItemID = 2,
+                Name = "Catnip",
+                Description = "Catnip infused cat treat, sample pack.",
+                Consumable = false,
+                CanAddToInventory = true,
+                Weight = 1,
+                XP = 0
+            });
+
+
         }
 
     }

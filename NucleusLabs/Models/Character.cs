@@ -33,8 +33,8 @@ namespace NucleusLabs
         #endregion
 
         #region PROPERTIES
-        
 
+        public int CharID { get; set; }
 
         public bool IsNPC
         {
@@ -51,7 +51,7 @@ namespace NucleusLabs
         public int LocationID
         {
             get { return _locationID; }
-            //set { _locationID = value; }
+            set { UpdateLocation(value); }
         }
 
         

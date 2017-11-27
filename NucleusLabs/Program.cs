@@ -12,6 +12,10 @@ namespace NucleusLabs
         /// instantiate the game controller, passing all control to the new Controller object
         /// </summary>
         /// <param name="args"></param>
+
+        public Controller gameController;
+
+
         static void Main(string[] args)
         {
             Controller gameController = new Controller();

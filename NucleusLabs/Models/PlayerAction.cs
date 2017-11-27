@@ -29,6 +29,10 @@ namespace NucleusLabs
         TravelUp,
         TravelDown,
         ReturnToMain,
+        InteractWith,
+        TalkTo,
+        GiveTo,
+        UseObject,
         Exit
     }
 }

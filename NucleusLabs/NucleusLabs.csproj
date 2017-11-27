@@ -46,6 +46,7 @@
     <Compile Include="Assets\ActionMenu.cs" />
     <Compile Include="Assets\Text.cs" />
     <Compile Include="Assets\Universe-Consumables.cs" />
+    <Compile Include="Assets\Universe-NPCs.cs" />
     <Compile Include="Assets\Universe-UsefulItems.cs" />
     <Compile Include="Assets\Universe-UselessItems.cs" />
     <Compile Include="ConsoleUtilities\ConsoleLayout.cs" />
@@ -54,9 +55,13 @@
     <Compile Include="ConsoleUtilities\ConsoleWindowHelper.cs" />
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\OnEvents.cs" />
+    <Compile Include="Interfaces\ISpeak.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\ConsumableItem.cs" />
-    <Compile Include="Models\UsefulItem.cs" />
+    <Compile Include="Models\NPCs\Cat.cs" />
+    <Compile Include="Models\NPCs\NPC.cs" />
+    <Compile Include="Models\UsefullItems\DoorLock.cs" />
+    <Compile Include="Models\UsefullItems\UsefulItem.cs" />
     <Compile Include="Models\UselessItem.cs" />
     <Compile Include="Models\GameObject.cs" />
     <Compile Include="Models\GameMap.cs" />

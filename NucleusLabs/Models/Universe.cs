@@ -20,28 +20,31 @@ namespace NucleusLabs
         }
 
         public List<GameObject> GameObjects  = new List<GameObject>();
-        
-     //   public List<GameObject> GameObjects
-     //   {
-     //       get { return _gameObjects; }
-     //       set { _gameObjects = value; }
-     //   }
+        public List<Character> GameNPCs = new List<Character>();
+        private Controller _controller;
+        //   public List<GameObject> GameObjects
+        //   {
+        //       get { return _gameObjects; }
+        //       set { _gameObjects = value; }
+        //   }
 
 
 
-        
+
 
 
 
         //
         // default Universe constructor
         //
-        public Universe()
+        public Universe(Controller controller)
         {
+            _controller = controller;
             //
             // add all of the universe objects to the game
             // 
             InitializeGameObjects();
+            InitializeNPCs();
         }
 
         
@@ -90,5 +93,6 @@ namespace NucleusLabs
 
 
         }
+
     }
 }

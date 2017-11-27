@@ -28,18 +28,22 @@ namespace NucleusLabs
             return messageBoxText;
         }
 
-        public static string CurrentLocationInfo(int LocationID,GameMap Map, IEnumerable<GameObject> gameObjects)
+        public static string CurrentLocationInfo(int LocationID,GameMap Map, Universe _universe)
         {
-             
+
+            IEnumerable<GameObject> gameObjects = _universe.GameObjects;
+            IEnumerable<Character> gameNPCs = _universe.GameNPCs;
+
+
             string locationName = Map.GetLocationName(LocationID);
             string locationDesc = Map.GetLocationDescription(LocationID);
             string messageBoxText =
 
             $"Your Current Location: {locationName}\n" +
-            " \n" +
+            Environment.NewLine +
             $"{locationDesc}\n" +
-            " \n" +
-            "Looking around you notice the following items\n\n";
+            Environment.NewLine +
+            "Looking around you notice the following items\n"+ Environment.NewLine;
 
 
             messageBoxText +=
@@ -57,7 +61,22 @@ namespace NucleusLabs
                     "\n";
             }
 
-            messageBoxText += "\nChoose from the menu options to proceed.\n";
+            messageBoxText += Environment.NewLine+"You also see the following characters" + Environment.NewLine + Environment.NewLine +
+                "ID".PadRight(10) +
+                "Name".PadRight(30) + "\n" +
+                "---".PadRight(10) +
+                "----------------------".PadRight(30) + "\n";
+            foreach (var gameNPC in gameNPCs.Where(b => b.LocationID == LocationID))
+            {
+                messageBoxText +=
+                    $"{gameNPC.CharID}".PadRight(10) +
+                    $"{gameNPC.Name}".PadRight(30) +
+                    "\n";
+            }
+
+
+
+            messageBoxText += Environment.NewLine+"Choose from the menu options to proceed.\n";
 
             return messageBoxText;
         }
@@ -95,7 +114,37 @@ namespace NucleusLabs
             return messageBoxText;
         }
 
+        public static string GameNPCsChooseList(IEnumerable<Character> gameNPCs)
+        {
+            //
+            // display table name and column headers
+            //
+            string messageBoxText =
+                "Objects here\n" +
+                " \n" +
 
+                //
+                // display table header
+                //
+                "ID".PadRight(10) +
+                "Name".PadRight(30) + "\n" +
+                "---".PadRight(10) +
+                "----------------------".PadRight(30) + "\n";
+
+            //
+            // display all traveler objects in rows
+            //
+
+            foreach (Character gameNPC in gameNPCs)
+            {
+                messageBoxText +=
+                    $"{gameNPC.CharID}".PadRight(10) +
+                    $"{gameNPC.Name}".PadRight(30) +
+                    Environment.NewLine;
+            }
+
+            return messageBoxText;
+        }
 
 
         public static string LookAt(GameObject gameObject)
@@ -336,6 +385,35 @@ namespace NucleusLabs
             return messageBoxText;
         }
 
+        public static string InteractWith()
+        {
 
+            string messageBoxText =
+                   "You have chosen to interact with something. Please select the type of interaction from the menu of choices on the right.\n";
+
+            return messageBoxText;
+        }
+        public static string TalkTo(IEnumerable<Character> gameNPCs)
+        {
+            string messageBoxText =
+                "You can talk with the following\n" +
+                " \n" +
+                "ID".PadRight(10) +
+                "Name".PadRight(30) +
+                "\n" +
+                "---".PadRight(10) +
+                "----------------------".PadRight(30) +
+                "\n" + "\n";
+
+            foreach (var gameNPC in gameNPCs)
+            {
+                messageBoxText +=
+                    $"{gameNPC.CharID}".PadRight(10) +
+                    $"{gameNPC.Name}".PadRight(30) +
+                    Environment.NewLine;
+            }
+
+            return messageBoxText;
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace NucleusLabs
             InitializeMission,
             MainMenu,
             InventoryMenu,
+            InteractMenu,
             AdminMenu
         }
 
@@ -55,7 +56,9 @@ namespace NucleusLabs
                     { '3', PlayerAction.LookAt },
                     { '4', PlayerAction.PickUpItem },
                     { '5', PlayerAction.PlayerInventory },
-                    { '9', PlayerAction.Admin },
+                    { '6', PlayerAction.InteractWith },
+
+                    //{ '9', PlayerAction.Admin },
                     { '0', PlayerAction.Exit }
                 }
         };
@@ -69,6 +72,18 @@ namespace NucleusLabs
                     { '1', PlayerAction.ConsumeItem },
                     { '2', PlayerAction.LookAt },
                     { '3', PlayerAction.PutDownItem },
+                    { '0', PlayerAction.ReturnToMain }
+            }
+        };
+        public static Menu InteractMenu = new Menu()
+        {
+            MenuName = "InventoryMenu",
+            MenuTitle = "Inventory Menu",
+            MenuChoices = new Dictionary<char, PlayerAction>()
+            {
+                    { '1', PlayerAction.TalkTo },
+                    { '2', PlayerAction.GiveTo },
+                    { '3', PlayerAction.UseObject },
                     { '0', PlayerAction.ReturnToMain }
             }
         };

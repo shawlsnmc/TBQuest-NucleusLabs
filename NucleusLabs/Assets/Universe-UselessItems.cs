@@ -58,7 +58,7 @@ namespace NucleusLabs
                     {3, "dirty red rag and notice a number sewn into the corner, 742695."},
                     {4, "light bulb and discover that it is burnt out."},
                     {5, "spray paint can and find that it is empty."},
-                    {6, "pillow that is falling apart and  faintly writen on it is the number, 843257."},
+                    {6, "pillow that is falling apart and faintly writen on it is the number, 843257."},
                     {7, "toothbrush that is very well used and turning green with mold."},
                     {8, "hair brush that is full of light hair."},
                     {9, "single shoe and find  that is falling apart."},
@@ -87,7 +87,7 @@ namespace NucleusLabs
                     {32, "baseball cap and find a number writen on the inside rim, 592318."},
                     {33, "Dirty red rag and notice a number sewn into the corner, 764318."},
                     {34, "Stuffed mouse and it has chew marks on it."},
-                    {35, "bag and find catnip in it."},
+                    {35, "bag and find used cat litter in it."},
                     {36, "can and find it is full of cat food."},
                     {37, "ball of yarn and notice some cat fur on it."}
 

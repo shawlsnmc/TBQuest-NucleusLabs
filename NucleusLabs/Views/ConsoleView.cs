@@ -485,10 +485,58 @@ namespace NucleusLabs
             else
             {
                 DisplayGamePlayScreen("Select Object", "It appears there are no game objects here.", menu, "");
-                gameObjectId = 0;
+                gameObjectId = -1;
             }
 
             return gameObjectId;
+        }
+
+
+
+        public int DisplayGetGameNPCId(IEnumerable<Character> ListOfCharacters, Menu menu)
+        {
+            int CharID = -1;
+            bool validGamerObjectId = false;
+
+
+            if (ListOfCharacters.Count() > 0)
+            {
+                DisplayGamePlayScreen("Select Character", Text.GameNPCsChooseList(ListOfCharacters), menu, "");
+
+                while (!validGamerObjectId)
+                {
+                    //
+                    // get an integer from the player
+                    //
+                    GetInteger("Enter the Id number of the character you wish to select: ", 0, 10000000, out CharID);
+
+                    //
+                    // validate integer as a valid game object id and in current location
+                    //
+
+                    if (CharID == 0)
+                    {
+                        validGamerObjectId = true;
+                        ClearInputBox();
+                    }
+                    else if (ListOfCharacters.Where(b => b.CharID == CharID).Count() == 1)
+                    {
+                        validGamerObjectId = true;
+                    }
+                    else
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("It appears you entered an invalid id. Please try again.");
+                    }
+                }
+            }
+            else
+            {
+                DisplayGamePlayScreen("Select Character", "It appears there are no characters here.", menu, "");
+                CharID = -1;
+            }
+
+            return CharID;
         }
 
         public void DisplayGameObjectInfo(GameObject gameObject, Menu menu)
