@@ -84,10 +84,10 @@ namespace NucleusLabs
         {
             _gamePlayer = new Player();
             _gameAI = new Player();
-            _gameConsoleView = new ConsoleView(_gamePlayer);
-            _playingGame = true;
             _gameMap = new GameMap();
             _universe = new Universe(this);
+            _gameConsoleView = new ConsoleView(_gamePlayer, _gameMap, _universe);
+            _playingGame = true;
             Console.CursorVisible = false;
         }
 
@@ -243,9 +243,6 @@ namespace NucleusLabs
                         this.UseObjectAction();
                         break;
 
-                    case PlayerAction.ViewMap:
-                        _gameConsoleView.DisplayMap(_gameMap, _gamePlayer);
-                        break;
                     case PlayerAction.ExitGame:
                         _playingGame = false;
                         break;

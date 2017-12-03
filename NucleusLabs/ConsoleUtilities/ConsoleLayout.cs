@@ -109,45 +109,63 @@ namespace NucleusLabs
         public static int FooterHeight = HeaderHeight; //not really used by the footer
         public static int FooterPositionTop = WindowHeight - FooterHeight; //was 32
 
+
+
+    
+
+
         //
         // status box configuration
         //
         public static int StatusBoxWidth = 32;
-        public static int StatusBoxHeight = WindowHeight - (HeaderHeight + FooterHeight);
+        public static int StatusBoxHeight = 9;
         public static int StatusBoxPositionLeft = 1; //was 122
-        public static int StatusBoxPositionTop = 3; //was 23
+        public static int StatusBoxPositionTop = WindowHeight - (FooterHeight + StatusBoxHeight); //was 23
         //public static int StatusBoxPositionTop = 3 + MenuBoxHeight; //was 23
+
+        public static int MenuBoxWidth = StatusBoxWidth;
+        //        public static int MenuBoxHeight = WindowHeight - 16 - StatusBoxHeight; //was 20
+        public static int MenuBoxHeight = WindowHeight - (HeaderHeight + FooterHeight + StatusBoxHeight); //was 20
+        public static int MenuBoxPositionLeft = StatusBoxPositionLeft; //was 122
+        public static int MenuBoxPositionTop = 3;
+
+        public static int MapBoxWidth = 46;
 
         //
         // message box configuration
         //
-        public static int MessageBoxWidth = WindowWidth - (StatusBoxWidth * 2) - 4; //was 120
+        public static int MessageBoxWidth = WindowWidth - (StatusBoxWidth + MapBoxWidth) - 4; //was 120
         public static int MessageBoxHeight = WindowHeight - (HeaderHeight + FooterHeight + InputBoxHeight); //was 25
         //public static int MessageBoxHeight = WindowHeight - 6 - InputBoxHeight; //was 25
         public static int MessageBoxPositionLeft = StatusBoxWidth + 2;
-        public static int MessageBoxPositionTop = StatusBoxPositionTop;
+        public static int MessageBoxPositionTop = MenuBoxPositionTop;
 
-
-        public static int InputBoxPositionTop = MenuBoxPositionTop + MessageBoxHeight + HeaderHeight; //was 28
-
-
-        //
-        // input box configuration
-        //
-        public static int InputBoxWidth = MessageBoxWidth; //was 120
-        public static int InputBoxPositionLeft = MessageBoxPositionLeft;
-        /// public static int InputBoxPositionTop = 23; //was 28 moved down
-        //public static int InputBoxPositionTop = 3 + MessageBoxHeight; //was 28
 
 
         //
         // menu box configuration
         //
-        public static int MenuBoxWidth = StatusBoxWidth;
+        
         //        public static int MenuBoxHeight = WindowHeight - 16 - StatusBoxHeight; //was 20
-        public static int MenuBoxHeight = WindowHeight - (HeaderHeight + FooterHeight); //was 20
-        public static int MenuBoxPositionLeft = StatusBoxWidth + MessageBoxWidth + 3; //was 122
-        public static int MenuBoxPositionTop = StatusBoxPositionTop;
+        public static int MapBoxHeight = WindowHeight - (HeaderHeight + FooterHeight+ InputBoxHeight); //was 20
+        public static int MapBoxPositionLeft = StatusBoxWidth + MessageBoxWidth + 3; //was 122
+        public static int MapBoxPositionTop = MenuBoxPositionTop;
+
+
+
+        public static int InputBoxPositionTop = MessageBoxPositionTop + MessageBoxHeight; //was 28
+
+
+        //
+        // input box configuration
+        //
+        public static int InputBoxWidth = MessageBoxWidth + MapBoxWidth+1; //was 120
+        public static int InputBoxPositionLeft = MessageBoxPositionLeft;
+        /// public static int InputBoxPositionTop = 23; //was 28 moved down
+        //public static int InputBoxPositionTop = 3 + MessageBoxHeight; //was 28
+
+
+
 
 
     }

@@ -57,7 +57,6 @@ namespace NucleusLabs
                     { '4', PlayerAction.PickUpItem },
                     { '5', PlayerAction.PlayerInventory },
                     { '6', PlayerAction.InteractWith },
-                    { '7', PlayerAction.ViewMap },
                     //{ '9', PlayerAction.Admin },
                     { '0', PlayerAction.ExitGame }
                 }

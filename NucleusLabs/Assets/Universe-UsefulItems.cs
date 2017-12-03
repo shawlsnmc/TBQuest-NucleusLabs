@@ -63,6 +63,19 @@ namespace NucleusLabs
                 Room = 652,
                 direction = GameMap.Direction.West
             });
+            GameObjects.Add(new UsefulItem
+            {
+                ObjectID = this.LastID,
+                LocationID = 611,
+                UsefulItemID = 4,
+                Name = "Map",
+                Description = "Blank map and supplies to be used to record your explorations.",
+                Consumable = false,
+                CanAddToInventory = true,
+                Weight = 1,
+                XP = 0
+            });
+
 
         }
 

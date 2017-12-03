@@ -26,6 +26,8 @@ namespace NucleusLabs
         // declare game objects for the ConsoleView object to use
         //
         Player _gamePlayer;
+        GameMap _gameMap;
+        Universe _universe;
 
         ViewStatus _viewStatus;
 
@@ -38,10 +40,11 @@ namespace NucleusLabs
         /// <summary>
         /// default constructor to create the console view objects
         /// </summary>
-        public ConsoleView(Player gamePlayer)
+        public ConsoleView(Player gamePlayer, GameMap map, Universe universe)
         {
             _gamePlayer = gamePlayer;
-
+            _gameMap = map;
+            _universe = universe;
             _viewStatus = ViewStatus.PlayerInitialization;
 
             InitializeDisplay();
@@ -73,6 +76,7 @@ namespace NucleusLabs
             DisplayMenuBox(menu, availableNavigation);
             DisplayInputBox();
             DisplayStatusBox();
+            DisplayMapBox("Map View", DisplayMap(_gameMap,_gamePlayer));
         }
 
         /// <summary>
@@ -446,6 +450,47 @@ namespace NucleusLabs
         }
 
 
+        private void DisplayMapBox(string headerText, string messageText)
+        {
+            //
+            // display the outline for the message box
+            //
+            Console.BackgroundColor = ConsoleTheme.MessageBoxBackgroundColor;
+            Console.ForegroundColor = ConsoleTheme.MessageBoxBorderColor;
+            ConsoleWindowHelper.DisplayBoxOutline(
+                ConsoleLayout.MapBoxPositionTop,
+                ConsoleLayout.MapBoxPositionLeft,
+                ConsoleLayout.MapBoxWidth,
+                ConsoleLayout.MapBoxHeight);
+
+            //
+            // display message box header
+            //
+            Console.BackgroundColor = ConsoleTheme.MessageBoxBorderColor;
+            Console.ForegroundColor = ConsoleTheme.MessageBoxForegroundColor;
+            Console.SetCursorPosition(ConsoleLayout.MapBoxPositionLeft + 2, ConsoleLayout.MapBoxPositionTop + 1);
+            Console.Write(ConsoleWindowHelper.Center(headerText, ConsoleLayout.MapBoxWidth - 4));
+
+            //
+            // display the text for the message box
+            //
+            Console.BackgroundColor = ConsoleTheme.MessageBoxBackgroundColor;
+            Console.ForegroundColor = ConsoleTheme.MessageBoxForegroundColor;
+            List<string> messageTextLines = new List<string>();
+            messageTextLines = ConsoleWindowHelper.MessageBoxWordWrap(messageText, ConsoleLayout.MapBoxWidth - 2);
+
+            int startingRow = ConsoleLayout.MapBoxPositionTop + 3;
+            int endingRow = startingRow + messageTextLines.Count();
+            int row = startingRow;
+            foreach (string messageTextLine in messageTextLines)
+            {
+                Console.SetCursorPosition(ConsoleLayout.MapBoxPositionLeft + 2, row);
+                Console.Write(messageTextLine);
+                row++;
+            }
+
+        }
+
         public int DisplayGetGameObjectId(IEnumerable<GameObject> ListOfObjects, Menu menu)
         {
             int gameObjectId = -1;
@@ -758,57 +803,66 @@ namespace NucleusLabs
         {
             DisplayGamePlayScreen("Player Information", Text.PlayerInfo(_gamePlayer), ActionMenu.MainMenu, "");
         }
-        public void DisplayMap(GameMap map, Player player)
+        public string DisplayMap(GameMap map, Player player)
         {
 
-            int f = (player.LocationID/100);
-            int location;
             string maptext = "";
-            string line1;
-            string line2;
-            string line3;
-            string line4;
-            string line5;
-            string[] mappiece;
-
-
-            for (int r = 1; r <= 6; r++)
+            if (_universe.GameObjects.OfType<UsefulItem>().Where(b => b.UsefulItemID == 4).First().LocationID == -1)
             {
-                line1 = line2 = line3 = line4 = line5 = "";
-                for (int c = 1; c <= 6; c++)
-                {
-                    location = f * 100 + r * 10 + c;
-                    if (map.GetLocationVisited(location) == true)
-                    {
+                //map is in player's inventory
+                int f = (player.LocationID / 100);
+                int location;
+                string line1;
+                string line2;
+                string line3;
+                string line4;
+                string line5;
+                string[] mappiece;
 
-                        mappiece = map.GetMapPiece(location);
-                        line1 += mappiece[0];
-                        if (location == player.LocationID)
+
+                for (int r = 1; r <= 6; r++)
+                {
+                    line1 = line2 = line3 = line4 = line5 = "";
+                    for (int c = 1; c <= 6; c++)
+                    {
+                        location = f * 100 + r * 10 + c;
+                        if (map.GetLocationVisited(location) == true)
                         {
-                            line2 += mappiece[1] + " YOU " + mappiece[2];
-                            line3 += mappiece[3] + " ARE " + mappiece[4];
-                            line4 += mappiece[5] + "HERE " + mappiece[6];
+
+                            mappiece = map.GetMapPiece(location);
+                            line1 += mappiece[0];
+                            if (location == player.LocationID || player == null)
+                            {
+                                line2 += mappiece[1] + " YOU " + mappiece[2];
+                                line3 += mappiece[3] + " ARE " + mappiece[4];
+                                line4 += mappiece[5] + "HERE " + mappiece[6];
+                            }
+                            else
+                            {
+                                line2 += mappiece[1] + "     " + mappiece[2];
+                                line3 += mappiece[3] + "     " + mappiece[4];
+                                line4 += mappiece[5] + "     " + mappiece[6];
+                            }
+                            line5 += mappiece[7];
                         }
                         else
                         {
-                            line2 += mappiece[1] + "     " + mappiece[2];
-                            line3 += mappiece[3] + "     " + mappiece[4];
-                            line4 += mappiece[5] + "     " + mappiece[6];
+                            line1 += "       ";
+                            line2 += "       ";
+                            line3 += "       ";
+                            line4 += "       ";
+                            line5 += "       ";
                         }
-                        line5 += mappiece[7];
                     }
-                    else
-                    {
-                        line1 += "       ";
-                        line2 += "       ";
-                        line3 += "       ";
-                        line4 += "       ";
-                        line5 += "       ";
-                    }
+                    maptext += line1 + Environment.NewLine + line2 + Environment.NewLine + line3 + Environment.NewLine + line4 + Environment.NewLine + line5 + Environment.NewLine;
+
                 }
-                maptext += line1 + Environment.NewLine + line2 + Environment.NewLine + line3 + Environment.NewLine + line4 + Environment.NewLine + line5 + Environment.NewLine;
             }
-            DisplayGamePlayScreen("View Map", maptext, ActionMenu.MainMenu, "", map.GetAvailableMovement(player.LocationID));
+            else
+            {
+                maptext = "It appears you don't have a map.";
+            }
+            return maptext;
         }
     
 
