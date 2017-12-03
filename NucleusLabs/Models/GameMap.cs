@@ -147,7 +147,7 @@ namespace NucleusLabs
             switch (direction)
             {
                 case Direction.Down:
-                    if ((int)result[0][result[0].Table.Columns["LocationDwonID"].Ordinal] != 0)
+                    if ((int)result[0][result[0].Table.Columns["LocationDownID"].Ordinal] != 0)
                     {
                         result[0][result[0].Table.Columns["LocationDownAccessible"].Ordinal] = Accessible;
                     }
@@ -185,6 +185,11 @@ namespace NucleusLabs
             }
         }
 
+        public string[] GetMapPiece(int locationID)
+        {
+            DataRow[] result = this.MapData.Select("LocationID = " + locationID);
+            return result[0][result[0].Table.Columns["LocationMap"].Ordinal] as string[];
+        }
 
 
         static DataTable BuildMap()
@@ -206,6 +211,7 @@ namespace NucleusLabs
             mapdata.Columns.Add("LocationDownID", typeof(int));
             mapdata.Columns.Add("LocationDownAccessible", typeof(bool));
             mapdata.Columns.Add("LocationVisitedByPlayer", typeof(bool));
+            mapdata.Columns.Add("LocationMap", typeof(string[]));
 
             //build base grid
             int location;
@@ -221,6 +227,8 @@ namespace NucleusLabs
             bool westacc;
             bool upacc;
             bool downacc;
+            string[] map ;
+            map = new string[]{"╔═════╗", "║", "╨", "║", " ", "║", "╥", "╚═════╝" };
 
             for (int f = 1; f <= 6; f++)
             {
@@ -236,7 +244,7 @@ namespace NucleusLabs
                         if (f == 1) { up = 0; upacc = false; } else { up = location - 100; upacc = true; }
                         if (f == 6) { down = 0; downacc = false; } else { down = location + 100; downacc = true; }
 
-                        mapdata.Rows.Add(location, "LOC"+location.ToString(), "LOC"+location.ToString()+"Desc", north, northacc, south, southacc, east, eastacc, west, westacc, up, upacc, down, downacc, false);
+                        mapdata.Rows.Add(location, "LOC"+location.ToString(), "LOC"+location.ToString()+"Desc", north, northacc, south, southacc, east, eastacc, west, westacc, up, upacc, down, downacc, false, map);
 
                     }
                 }
@@ -248,12 +256,14 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North, South, and West and the room continues to the East.";
             result[0][result[0].Table.Columns["LocationSouthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "╔══════", "║", " ", "║", " ", "║", " ", "╟──────" };
 
             result = mapdata.Select("LocationID = 612");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Large storage room";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North and East with the room continuing to the West and a door to the South.";
             result[0][result[0].Table.Columns["LocationEastAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "══════╤", " ", "│", " ", "│", " ", "│", "──┐ ┌─┘" };
 
             result = mapdata.Select("LocationID = 613");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Lab Room";
@@ -261,24 +271,28 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationWestAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationSouthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "╤══════", "│", " ", "│", " ", "│", " ", "└──────" };
 
             result = mapdata.Select("LocationID = 614");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Lab Room";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North and East with the room continuing to the West and a door to the South.";
             result[0][result[0].Table.Columns["LocationEastAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "══════╤", " ", "│", " ", "│", " ", "│", "──┐ ┌─┘" };
 
             result = mapdata.Select("LocationID = 615");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BathRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North and West with the room continuing to the East and a door to the South.";
             result[0][result[0].Table.Columns["LocationWestAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "╤══════", "│", " ", "│", " ", "│", " ", "└─┐ ┌──" };
 
             result = mapdata.Select("LocationID = 616");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BathRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North, South, and East with the room continuing to the West.";
             result[0][result[0].Table.Columns["LocationSouthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "══════╗", " ", "║", " ", "║", " ", "║", "──────╢" };
 
 
             result = mapdata.Select("LocationID = 621");
@@ -286,11 +300,13 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North and West with the room continuing to the South and a door the the East.";
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "╟─────┐", "║", "└", "║", " ", "║", "┌", "║     │" };
 
             result = mapdata.Select("LocationID = 622");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Hallway";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Long hallway heading to the East and South with doors to the North and West.";
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "┌─┘ └──", "┘", " ", " ", " ", "┐", " ", "│     ┌" };
 
             result = mapdata.Select("LocationID = 623");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Hallway";
@@ -298,18 +314,21 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationSouthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "───────", " ", " ", " ", " ", " ", " ", "───────" };
 
             result = mapdata.Select("LocationID = 624");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Hallway";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Hallway to the East and West with a wall to the South and a door to the North.";
             result[0][result[0].Table.Columns["LocationSouthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "──┘ └──", " ", " ", " ", " ", " ", " ", "───────" };
 
             result = mapdata.Select("LocationID = 625");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Hallway";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Hallway to the West and South with a door to the North and a wall to the East. ";
             result[0][result[0].Table.Columns["LocationEastAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "──┘ └─┐", " ", "│", " ", "│", " ", "│", "┐     │" };
 
             result = mapdata.Select("LocationID = 626");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BedRoom";
@@ -317,7 +336,7 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationWestAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
-
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "┌─────╢", "│", "║", "│", "║", "│", "║", "│     ║" };
 
             result = mapdata.Select("LocationID = 631");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BedRoom";
@@ -325,6 +344,7 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationEastAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationSouthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "║     │", "║", "│", "║", "│", "║", "│", "╟─────┘" };
 
             result = mapdata.Select("LocationID = 632");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Hallway";
@@ -332,6 +352,7 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationEastAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationWestAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "│     │", "│", "│", "│", "│", "│", "│", "│     │" };
 
             result = mapdata.Select("LocationID = 633");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "";
@@ -339,6 +360,7 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationWestAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "┌──────", "│", " ", "│", " ", "│", " ", "│      " };
 
             result = mapdata.Select("LocationID = 634");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "";
@@ -346,26 +368,30 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationEastAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "──────┐", " ", "│", " ", "│", " ", "│", "      │" };
 
             result = mapdata.Select("LocationID = 635");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Hallway";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Halway to the North and South with a wall to the West and a door to the East.";
             result[0][result[0].Table.Columns["LocationWestAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "│     │", "│", "└", "│", " ", "│", "┌", "│     │" };
 
             result = mapdata.Select("LocationID = 636");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BedRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Wall to the South and East with a door to the West and the room continuing to the North.";
             result[0][result[0].Table.Columns["LocationSouthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "│     ║", "┘", "║", " ", "║", "┐", "║", "└─────║" };
 
 
             result = mapdata.Select("LocationID = 641");
-            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BedRoom";
+            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Janitor Closet";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North, East, and West with the room continuing to the South.";
             result[0][result[0].Table.Columns["LocationEastAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "╟─────┐", "║", "│", "║", "│", "║", "│", "║     │" };
 
             result = mapdata.Select("LocationID = 642");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Hallway";
@@ -373,12 +399,14 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationEastAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationWestAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "│     │", "│", "│", "│", "│", "│", "│", "│     │" };
 
             result = mapdata.Select("LocationID = 643");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "";
             result[0][result[0].Table.Columns["LocationWestAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "│      ", "│", " ", "│", " ", "│", " ", "└─┐ ┌──" };
 
             result = mapdata.Select("LocationID = 644");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "";
@@ -386,35 +414,42 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationEastAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationSouthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "      │", " ", "│", " ", "│", " ", "│", "──────┘" };
 
             result = mapdata.Select("LocationID = 645");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Hallway";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Halway to the North and South with a wall to the West and a door to the East.";
             result[0][result[0].Table.Columns["LocationWestAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "│     │", "│", "└", "│", " ", "│", "┌", "│     │" };
 
             result = mapdata.Select("LocationID = 646");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BedRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North and East with a door to the West and room continues to the South.";
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "┌─────╢", "┘", "║", " ", "║", "┐", "║", "│     ║" };
 
 
             result = mapdata.Select("LocationID = 651");
-            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BedRoom";
-            result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to hte South and West with a door to the East and room continues to the North.";
+            result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Janitor Closet";
+            result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the South and West with a door to the East and room continues to the North.";
             result[0][result[0].Table.Columns["LocationSouthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "║     │", "║", "└", "║", " ", "║", "┌", "╟─────┘" };
 
             result = mapdata.Select("LocationID = 652");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Hallway";
-            result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Hallway to the North and East with doors to the South and West.";
+            result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Hallway to the North and East with a door to the South and and a door to the west for the Janitor Closet.";
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationWestAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "│     └", "┘", " ", " ", " ", "┐", " ", "└─┐ ┌──" };
 
             result = mapdata.Select("LocationID = 653");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Hallway";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Hallway heading to the East and West with doors to the North and South.";
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "──┘ └──", " ", " ", " ", " ", " ", " ", "──┐ ┌──" };
 
             result = mapdata.Select("LocationID = 654");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Hallway";
@@ -422,12 +457,14 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationSouthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "───────", " ", " ", " ", " ", " ", " ", "───────" };
 
             result = mapdata.Select("LocationID = 655");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Hallway";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Hallway heading to the North and West with a wall to the East and a door to the South.";
             result[0][result[0].Table.Columns["LocationEastAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "┘     │", " ", "│", " ", "│", " ", "│", "──┐ ┌─┘" };
 
             result = mapdata.Select("LocationID = 656");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BedRoom";
@@ -435,25 +472,28 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationWestAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationSouthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
-            
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "│     ║", "│", "║", "│", "║", "│", "║", "└─────╢" };
 
             result = mapdata.Select("LocationID = 661");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BathRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North, South, and West and the room continues to the East.";
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "╟──────", "║", " ", "║", " ", "║", " ", "╚══════" };
 
             result = mapdata.Select("LocationID = 662");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "BathRoom";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the East and South with a door to the North and room continues to the West.";
             result[0][result[0].Table.Columns["LocationEastAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "──┘ └─┐", " ", "│", " ", "│", " ", "│", "══════╧" };
 
             result = mapdata.Select("LocationID = 663");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Lab Room";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the South and West and a door to the North and room continues to the East.";
             result[0][result[0].Table.Columns["LocationWestAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "┌─┘ └──", "│", " ", "│", " ", "│", " ", "╧══════" };
 
             result = mapdata.Select("LocationID = 664");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "Lab Room";
@@ -461,34 +501,56 @@ namespace NucleusLabs
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationEastAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "──────┐", " ", "│", " ", "│", " ", "│", "══════╧" };
 
             result = mapdata.Select("LocationID = 665");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the South and West and a door to the North and room continues to the East.";
             result[0][result[0].Table.Columns["LocationWestAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "┌─┘ └──", "│", " ", "│", " ", "│", " ", "╧══════" };
 
             result = mapdata.Select("LocationID = 666");
             result[0][result[0].Table.Columns["LocationName"].Ordinal] = "";
             result[0][result[0].Table.Columns["LocationDescription"].Ordinal] = "Walls to the North, East, and South.  The room continues to the West. However, there is a hole in the ceiling that looks like a ladder once hung but only the brackets remain.";
             result[0][result[0].Table.Columns["LocationNorthAccessible"].Ordinal] = false;
             result[0][result[0].Table.Columns["LocationUpAccessible"].Ordinal] = false;
+            result[0][result[0].Table.Columns["LocationMap"].Ordinal] = new string[] { "──────╢", " ", "║", " ", "║", " ", "║", "══════╝" };
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+            //     12345  12345  12345  12345  12345  12345 
+            //1 1 ╔════════════╤╤════════════╤╤════════════╗
+            //  2 ║ YOU        ││            ││            ║
+            //  3 ║ ARE        ││            ││            ║
+            //  4 ║HERE        ││            ││            ║
+            //  5 ╟────────┐ ┌─┘└────────┐ ┌─┘└─┐ ┌────────╢
+            //2 1 ╟─────┐┌─┘ └───────────┘ └────┘ └─┐┌─────╢
+            //  2 ║     ││                          ││     ║
+            //  3 ║     ││                          ││     ║
+            //  4 ║     ││                          ││     ║
+            //  5 ║     ││     ┌──────────────┐     ││     ║
+            //3 1 ║     ││     │┌────────────┐│     ││     ║
+            //  2 ║     ││     ││            ││     ││     ║
+            //  3 ║     ││     ││            ││     ││     ║
+            //  4 ║     ││     ││            ││     ││     ║
+            //  5 ╟─────┘│     ││            ││     │└─────║
+            //4 1 ╟─────┐│     ││            ││     │┌─────║
+            //  2 ║     ││     ││            ││     ││     ║
+            //  3 ║     ││     ││            ││     ││     ║
+            //  4 ║     ││     ││            ││     ││     ║
+            //  5 ║     ││     │└────────────┘│     ││     ║
+            //5 1 ║     ││     └──────────────┘     ││     ║
+            //  2 ║     ││                          ││     ║
+            //  3 ║     ││                          ││     ║
+            //  4 ║     ││                          ││     ║
+            //  5 ╟─────┘└─┐ ┌───────────┐ ┌────┐ ┌─┘└─────╢
+            //6 1 ╟────────┘ └─┐┌────────┘ └─┐┌─┘ └────────╢
+            //  2 ║            ││            ││            ║
+            //  3 ║            ││            ││            ║
+            //  4 ║            ││            ││            ║
+            //  5 ╚════════════╧╧════════════╧╧════════════╝
+            //  
             return mapdata;
         }
     }

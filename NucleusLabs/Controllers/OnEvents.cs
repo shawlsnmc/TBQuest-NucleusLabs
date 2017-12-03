@@ -8,12 +8,25 @@ namespace NucleusLabs
 {
     public partial class Controller
     {
+
+
+        //Define Events
+        public delegate void GiveItemEventHandler(object source, GameObject gameObject, Character recipient);
+
+        public event GiveItemEventHandler GiveItemEvent;
+
+        protected virtual void OnItemGiveEvent(GameObject gameObject, Character recipient)
+        {
+            GiveItemEvent?.Invoke(this, gameObject, recipient);
+        }
+
+
+        //end Define Events
+
         //OnEvents / psedo events
 
         public void OnItemPickUp(GameObject gameObject, int LocationID)
         {
-            //
-            //if item is a key...
             if (gameObject is UsefulItem)
             {
                 UsefulItem usefulGameObject = gameObject as UsefulItem;
@@ -42,8 +55,6 @@ namespace NucleusLabs
 
         public void OnItemPutDown(GameObject gameObject, int LocationID)
         {
-            //
-            //if item is a key...
             if (gameObject is UsefulItem)
             {
                 UsefulItem usefulGameObject = gameObject as UsefulItem;
@@ -66,8 +77,7 @@ namespace NucleusLabs
 
         public void OnItemConsume(GameObject gameObject)
         {
-            //
-            //if item is a key...
+
 
         }
     }

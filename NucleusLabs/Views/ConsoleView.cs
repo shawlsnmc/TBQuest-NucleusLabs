@@ -758,7 +758,58 @@ namespace NucleusLabs
         {
             DisplayGamePlayScreen("Player Information", Text.PlayerInfo(_gamePlayer), ActionMenu.MainMenu, "");
         }
+        public void DisplayMap(GameMap map, Player player)
+        {
 
+            int f = (player.LocationID/100);
+            int location;
+            string maptext = "";
+            string line1;
+            string line2;
+            string line3;
+            string line4;
+            string line5;
+            string[] mappiece;
+
+
+            for (int r = 1; r <= 6; r++)
+            {
+                line1 = line2 = line3 = line4 = line5 = "";
+                for (int c = 1; c <= 6; c++)
+                {
+                    location = f * 100 + r * 10 + c;
+                    if (map.GetLocationVisited(location) == true)
+                    {
+
+                        mappiece = map.GetMapPiece(location);
+                        line1 += mappiece[0];
+                        if (location == player.LocationID)
+                        {
+                            line2 += mappiece[1] + " YOU " + mappiece[2];
+                            line3 += mappiece[3] + " ARE " + mappiece[4];
+                            line4 += mappiece[5] + "HERE " + mappiece[6];
+                        }
+                        else
+                        {
+                            line2 += mappiece[1] + "     " + mappiece[2];
+                            line3 += mappiece[3] + "     " + mappiece[4];
+                            line4 += mappiece[5] + "     " + mappiece[6];
+                        }
+                        line5 += mappiece[7];
+                    }
+                    else
+                    {
+                        line1 += "       ";
+                        line2 += "       ";
+                        line3 += "       ";
+                        line4 += "       ";
+                        line5 += "       ";
+                    }
+                }
+                maptext += line1 + Environment.NewLine + line2 + Environment.NewLine + line3 + Environment.NewLine + line4 + Environment.NewLine + line5 + Environment.NewLine;
+            }
+            DisplayGamePlayScreen("View Map", maptext, ActionMenu.MainMenu, "", map.GetAvailableMovement(player.LocationID));
+        }
     
 
   

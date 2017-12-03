@@ -28,7 +28,7 @@ namespace NucleusLabs
         //       set { _gameObjects = value; }
         //   }
 
-
+        public Random rand = new Random();
 
 
 
@@ -54,8 +54,7 @@ namespace NucleusLabs
         private void InitializeGameObjects()
         {
             //create useless game objects
-            Random rand = new Random();
-
+            
             //Useless Items
             for (int i = 0; i < 200; i++)
             {

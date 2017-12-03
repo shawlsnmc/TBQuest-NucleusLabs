@@ -10,5 +10,7 @@ namespace NucleusLabs
     {
         public int XP { get; set; }
         public int UsefulItemID { get; set; }
+        public bool CanInteractWith { get; set; }
+
     }
 }

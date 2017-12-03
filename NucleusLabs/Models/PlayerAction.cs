@@ -33,6 +33,7 @@ namespace NucleusLabs
         TalkTo,
         GiveTo,
         UseObject,
-        Exit
+        ViewMap,
+        ExitGame
     }
 }

@@ -24,6 +24,8 @@ namespace NucleusLabs
             {   
                 //make sure we get a controller reference before subscribing to events
                 _controller = value;
+
+                //subscribe to our event
                 controller.GiveItemEvent += this.onGiveItem;
             }
         }

@@ -4,6 +4,48 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+//     12345  12345  12345  12345  12345  12345 
+//1 1 ╔════════════╤╤════════════╤╤════════════╗
+//  2 ║ YOU        ││            ││            ║
+//  3 ║ ARE        ││            ││            ║
+//  4 ║HERE        ││            ││            ║
+//  5 ╟────────┐ ┌─┘└────────┐ ┌─┘└─┐ ┌────────╢
+//2 1 ╟─────┐┌─┘ └───────────┘ └────┘ └─┐┌─────╢
+//  2 ║     └┘                          ││     ║
+//  3 ║                                 ││     ║
+//  4 ║     ┌┐                          ││     ║
+//  5 ║     ││     ┌──────────────┐     ││     ║
+//3 1 ║     ││     │┌────────────┐│     ││     ║
+//  2 ║     ││     ││            ││     ││     ║
+//  3 ║     ││     ││            ││     ││     ║
+//  4 ║     ││     ││            ││     ││     ║
+//  5 ╟─────┘│     ││            ││     │└─────║
+//4 1 ╟─────┐│     ││            ││     │┌─────║
+//  2 ║     ││     ││            ││     ││     ║
+//  3 ║     ││     ││            ││     ││     ║
+//  4 ║     ││     ││            ││     ││     ║
+//  5 ║     ││     │└────────────┘│     ││     ║
+//5 1 ║     ││     └──────────────┘     ││     ║
+//  2 ║     ││                          ││     ║
+//  3 ║     ││                          ││     ║
+//  4 ║     ││                          ││     ║
+//  5 ╟─────┘└─┐ ┌───────────┐ ┌────┐ ┌─┘└─────╢
+//6 1 ╟────────┘ └─┐┌────────┘ └─┐┌─┘ └────────╢
+//  2 ║            ││            ││            ║
+//  3 ║            ││            ││            ║
+//  4 ║            ││            ││            ║
+//  5 ╚════════════╧╧════════════╧╧════════════╝
+//  
+
+
+
+
+
+
+
+
+
 namespace NucleusLabs
 {
     /// <summary>
@@ -35,19 +77,6 @@ namespace NucleusLabs
         }
 
 
-
-
-        public delegate void GiveItemEventHandler(object source, GameObject gameObject, Character recipient);
-
-        public event GiveItemEventHandler GiveItemEvent;
-
-        protected virtual void OnGiveItemEvent(GameObject gameObject, Character recipient)
-        {
-            if (GiveItemEvent != null)
-            {
-                GiveItemEvent(this, gameObject, recipient);
-            }
-        }
         /// <summary>
         /// initialize the major game objects
         /// </summary>
@@ -181,26 +210,13 @@ namespace NucleusLabs
 
                         break;
                     case PlayerAction.PickUpItem:
-                        //if (ActionMenu.currentMenu == ActionMenu.CurrentMenu.MainMenu)
-                        //{
                         this.PickUpAction(_gamePlayer.LocationID, ActionMenu.MainMenu);
-                        //}
-                        //else if (ActionMenu.currentMenu == ActionMenu.CurrentMenu.InventoryMenu)
-                        //{
-                        //    this.PickUpAction(_gamePlayer.LocationID, ActionMenu.InventoryMenu);
-                        //}
                         break;
-                    case PlayerAction.PutDownItem:
-                        //if (ActionMenu.currentMenu == ActionMenu.CurrentMenu.MainMenu)
-                        //{
-                        //    this.PutDownAction(_gamePlayer.LocationID, ActionMenu.MainMenu);
-                        //}
-                        //else if (ActionMenu.currentMenu == ActionMenu.CurrentMenu.InventoryMenu)
-                        //{
-                        this.PutDownAction(_gamePlayer.LocationID, ActionMenu.InventoryMenu);
-                        //}
 
+                    case PlayerAction.PutDownItem:
+                        this.PutDownAction(_gamePlayer.LocationID, ActionMenu.InventoryMenu);
                         break;
+
                     case PlayerAction.ConsumeItem:
                         this.ConsumeAction(ActionMenu.InventoryMenu);
                         break;
@@ -214,6 +230,7 @@ namespace NucleusLabs
                         ActionMenu.currentMenu = ActionMenu.CurrentMenu.InteractMenu;
                         _gameConsoleView.DisplayGamePlayScreen("Interact With", Text.InteractWith(), ActionMenu.InteractMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
                         break;
+
                     case PlayerAction.TalkTo:
                         this.TalkToAction();
                         break;
@@ -222,78 +239,82 @@ namespace NucleusLabs
                         this.GiveToAction();
                         break;
 
-                    case PlayerAction.Exit:
+                    case PlayerAction.UseObject:
+                        this.UseObjectAction();
+                        break;
+
+                    case PlayerAction.ViewMap:
+                        _gameConsoleView.DisplayMap(_gameMap, _gamePlayer);
+                        break;
+                    case PlayerAction.ExitGame:
                         _playingGame = false;
                         break;
 
                     case PlayerAction.TravelNorth:
-                        //bool temp = (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.North));
-
                         if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.North)) {
                             _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.North), _gameMap);
                             ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
                             _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_gamePlayer.LocationID, _gameMap, _universe), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
-
                         }
                         else
                         {
                             //can't travel here
                         }
                         break;
+
                     case PlayerAction.TravelSouth:
                         if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.South)) {
                             _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.South), _gameMap);
                             ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
                             _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_gamePlayer.LocationID, _gameMap, _universe), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
-
                         }
                         else
                         {
                             //can't travel here
                         }
                         break;
+
                     case PlayerAction.TravelEast:
                         if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.East)) {
                             _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.East), _gameMap);
                             ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
                             _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_gamePlayer.LocationID, _gameMap, _universe), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
-
                         }
                         else
                         {
                             //can't travel here
                         }
                         break;
+
                     case PlayerAction.TravelWest:
                         if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.West)) {
                             _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.West), _gameMap);
                             ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
                             _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_gamePlayer.LocationID, _gameMap, _universe), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
-
                         }
                         else
                         {
                             //can't travel here
                         }
                         break;
+
                     case PlayerAction.TravelUp:
                         if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.Up)) {
                             _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.Up), _gameMap);
                             ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
                             _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_gamePlayer.LocationID, _gameMap, _universe), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
-
                         }
                         else
                         {
                             //can't travel here
                         }
                         break;
+
                     case PlayerAction.TravelDown:
                         if (_gameMap.GetTravelDirectionAccessible(_gamePlayer.LocationID, GameMap.Direction.Down)) {
                             _gamePlayer.TravelTo(_gameMap.GetTravelLocation(_gamePlayer.LocationID, GameMap.Direction.Down), _gameMap);
                             ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
                             _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_gamePlayer.LocationID, _gameMap, _universe), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
-
                         }
                         else
                         {
@@ -440,7 +461,7 @@ namespace NucleusLabs
                     gameObject.LocationID = 0;
 
                     // Giving Item to NPC
-                    OnGiveItemEvent(gameObject, NPC);
+                    OnItemGiveEvent(gameObject, NPC);
 
                     //reset screen..
                     _gameConsoleView.DisplayGamePlayScreen("Interact With", Text.InteractWith(), ActionMenu.InteractMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
@@ -453,6 +474,63 @@ namespace NucleusLabs
             {
                 _gameConsoleView.DisplayGamePlayScreen("Interact With", Text.InteractWith(), ActionMenu.InteractMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
             }
+        }
+
+        private void UseObjectAction()
+        {
+            ActionMenu.currentMenu = ActionMenu.CurrentMenu.InteractMenu;
+
+            int ObjectID = _gameConsoleView.DisplayGetGameObjectId(_universe.GameObjects.OfType<UsefulItem>().Where(b => b.LocationID == _gamePlayer.LocationID && (b as UsefulItem).CanInteractWith == true), ActionMenu.InteractMenu);
+            
+            if (ObjectID > 0)
+            {
+                GameObject GameObject = _universe.GameObjects.Where(b => b.ObjectID == ObjectID).First();
+                
+                switch (GameObject.GetType().Name)
+                {
+                    case "DoorLock":
+                        int lockCode;
+                        _gameConsoleView.DisplayGamePlayScreen("Interact With Door Lock", "Industrial Digial Door Lock System\nPlease enter your door lock code below", ActionMenu.InteractMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
+                        string temp = (GameObject as DoorLock).LockCode.ToString();
+                        _gameConsoleView.GetInteger("Enter Door Lock Code: "+temp, 100000, 999999, out lockCode);
+                        if ((GameObject as DoorLock).LockCode == lockCode)
+                        {
+                            string text = "";
+                            if ((GameObject as DoorLock).IsUnlocked== true)
+                            {
+                                (GameObject as DoorLock).IsUnlocked = false;
+                                text = "Code Successful! Door is now locked.";
+                            }
+                            else
+                            {
+                                (GameObject as DoorLock).IsUnlocked = true;
+                                text = "Code Successful! Door is now unlocked.";
+                            }
+                            _gameMap.SetLocationLock((GameObject as DoorLock).Room, (GameObject as DoorLock).direction, (GameObject as DoorLock).IsUnlocked);
+
+
+                            _gameConsoleView.DisplayGamePlayScreen("Interact With Door Lock", text, ActionMenu.InteractMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
+
+                        }
+                        else
+                        {
+                            _gameConsoleView.DisplayGamePlayScreen("Interact With Door Lock", "Code incorrect.", ActionMenu.InteractMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
+                        }
+                        break;
+
+
+                }
+                    
+
+                
+
+            }
+
+            if (ObjectID == 0)//cancelled selection
+            {
+                _gameConsoleView.DisplayGamePlayScreen("Interact With", Text.InteractWith(), ActionMenu.InteractMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
+            }
+
         }
 
     }

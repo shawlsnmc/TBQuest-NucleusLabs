@@ -46,7 +46,23 @@ namespace NucleusLabs
                 Weight = 1,
                 XP = 0
             });
-
+            GameObjects.Add(new DoorLock
+            {
+                ObjectID = this.LastID,
+                LocationID = 652,
+                UsefulItemID = 3,
+                Name = "Janitor Closet Door Lock",
+                Description = "Digital keypad lock for gaining access to the janitor's closet",
+                Consumable = false,
+                CanAddToInventory = false,
+                Weight = 0,
+                XP = 0,
+                IsUnlocked = false,
+                CanInteractWith = true,
+                LockCode = rand.Next(100000,1000000),
+                Room = 652,
+                direction = GameMap.Direction.West
+            });
 
         }
 

@@ -36,7 +36,8 @@ namespace NucleusLabs
                 controller = _controller
             });
 
-            
+            string temp =  ((GameObjects.OfType<UsefulItem>().Where(b => b.UsefulItemID == 3).First())as DoorLock).LockCode.ToString();
+
             GameNPCs.Add(new Cat
             {
                 CharID = this.LastID,
@@ -45,7 +46,7 @@ namespace NucleusLabs
                 AcceptUsefulItems = { 2 },
                 HasCatnip = false,
                 Messages = { "Meow?", "MEEEEEEoooowoow", "Meowowowowow", "Purrrrrrr", "Meoooow", "Meow Meow Meow" },
-                SecretMessages = { { 652, "Ball of yarn, Janitor took, Locked in room he did. Door code, 159753 it is." },
+                SecretMessages = { { 652, "Ball of yarn, Janitor took, Locked in room he did. Door code, "+ temp +" it is." },
                                    { 666, "Brackets on ceiling, you did notice? Put down ladder you should " },
                 },
                 CanFollowPlayer = true,

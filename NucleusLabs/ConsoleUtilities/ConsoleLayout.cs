@@ -77,7 +77,7 @@ namespace NucleusLabs
         // console window configuration
         //
         public static int WindowWidth = 150; //was 160
-        public static int WindowHeight = 50; //was 35
+        public static int WindowHeight = 60; //was 35
         public static int WindowPositionLeft = 0;
         public static int WindowPositionTop = 0;
 
