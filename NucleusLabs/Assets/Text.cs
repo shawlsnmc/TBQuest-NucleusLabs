@@ -113,7 +113,18 @@ namespace NucleusLabs
 
             return messageBoxText;
         }
+        public static string YouWon(String PlayerName, String NPCPlayer)
+        {
+            string Message =
+                $"Congrats! You Won! I know, I know, You didn't find {NPCPlayer}. "+
+                "The purpose of this game is to demonstrate the possibilities thus "+
+                "a lot of focus was placed on functionality. The rest of the game "+
+                "is simply more of this same type of stuff. I hope you enjoyed this "+
+                "short adventure!" + Environment.NewLine + Environment.NewLine +
+                "Press any key to exit.";
 
+            return Message;
+        }
         public static string GameNPCsChooseList(IEnumerable<Character> gameNPCs)
         {
             //
@@ -318,14 +329,14 @@ namespace NucleusLabs
         {
             string messageBoxText =
                 $"\t{gamePlayer.Greeting()}\n" +
-                "\n"+
+                "\n" +
                 $"\tPlayer Name: {gamePlayer.Name}\n" +
                 $"\tPlayer Gender: {gamePlayer.Gender}\n" +
-                $"\tPlayer Location: {gamePlayer.LocationID} *\n" +
-                $"\tPlayer Health: {gamePlayer.Health}\n" +
-                $"\tPlayer XP: {gamePlayer.Xp}\n" +
-                " \n" +
-                "\t* Temp for testing";
+                $"\tHealth: {gamePlayer.Health}\n" +
+                $"\tXP: {gamePlayer.Xp}\n" +
+                $"\tInventory Weight: {gamePlayer.InventoryWeight}\n" +
+                " \n";
+
 
             return messageBoxText;
         }
@@ -337,9 +348,9 @@ namespace NucleusLabs
             List<string> statusBoxText = new List<string>
             {
                 $"Player's Gender: {Player.Gender}\n",
-                $"Player's Location: {Player.LocationID}\n",
                 $"Player's Health: {Player.Health}\n" ,
-                $"Player's XP: {Player.Xp}\n"
+                $"Player's XP: {Player.Xp}\n",
+                $"Inventory Weight: {Player.InventoryWeight}\n"
             };
 
             return statusBoxText;
@@ -352,8 +363,9 @@ namespace NucleusLabs
                 " \n" +
                 $"Oh well, looks like {gamePlayerAI.Name} gets to stay here with me. MUHAHAHA!\n" +
                 " \n" +
-                "Better luck next time." +
-                " \n";
+                "Better luck next time.\n" +
+                " \n"+
+                "Press any key to exit.";
             
             return messageBoxText;
         }

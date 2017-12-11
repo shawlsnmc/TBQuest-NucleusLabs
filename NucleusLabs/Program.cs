@@ -13,7 +13,7 @@ namespace NucleusLabs
         /// </summary>
         /// <param name="args"></param>
 
-        public Controller gameController;
+        //public Controller gameController;
 
 
         static void Main(string[] args)

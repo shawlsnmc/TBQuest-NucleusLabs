@@ -92,6 +92,10 @@ namespace NucleusLabs
                 this.Xp++;
                 map.SetLocationVisited(LocationID);
             }
+
+            //Process health drain due to weight
+            this.Health -= Convert.ToInt32(this.InventoryWeight / 10);
+
         }
         
 

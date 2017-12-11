@@ -18,6 +18,7 @@ namespace NucleusLabs
         protected virtual void OnItemGiveEvent(GameObject gameObject, Character recipient)
         {
             GiveItemEvent?.Invoke(this, gameObject, recipient);
+            UpdatePlayerInventoryWeight();
         }
 
 
@@ -27,11 +28,13 @@ namespace NucleusLabs
 
         public void OnItemPickUp(GameObject gameObject, int LocationID)
         {
+            UpdatePlayerInventoryWeight();
             if (gameObject is UsefulItem)
             {
                 UsefulItem usefulGameObject = gameObject as UsefulItem;
                 //If gameObject grants XP then add to player
-                if (usefulGameObject.XP != 0){
+                if (usefulGameObject.XP != 0)
+                {
                     _gamePlayer.Xp += usefulGameObject.XP;
                     usefulGameObject.XP = 0;
                 }
@@ -55,6 +58,7 @@ namespace NucleusLabs
 
         public void OnItemPutDown(GameObject gameObject, int LocationID)
         {
+            UpdatePlayerInventoryWeight();
             if (gameObject is UsefulItem)
             {
                 UsefulItem usefulGameObject = gameObject as UsefulItem;
@@ -70,15 +74,44 @@ namespace NucleusLabs
                         break;
 
                 }
-                //
+                
 
             }
         }
-
+        public void OnPlayerTravel(GameMap.Direction Dir)
+        {
+            int TravelToLocation = _gameMap.GetTravelLocation(_gamePlayer.LocationID, Dir);
+            _gamePlayer.TravelTo(TravelToLocation, _gameMap);
+            ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
+            _gameSounds.GameSounds.Where(b => b.Name == "FootSteps").First().Play();
+            if (TravelToLocation == 566)
+            {
+                //Player beat game
+                _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.YouWon(_gamePlayer.Name, _gameAI.Name), ActionMenu.MissionIntro, "");
+                _gameConsoleView.GetContinueKey();
+                _playingGame = false;
+            }
+            else
+            {
+                _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_gamePlayer.LocationID, _gameMap, _universe), ActionMenu.MainMenu, "", _gameMap.GetAvailableMovement(_gamePlayer.LocationID));
+            }
+        }
         public void OnItemConsume(GameObject gameObject)
         {
+            UpdatePlayerInventoryWeight();
+        }
+        public void OnPlayerTravelFail()
+        {
+            _gameSounds.GameSounds.Where(b => b.Name == "FootSteps").First().Stop();
+            if (_gamePlayer.Gender == Player.Genders.Male)
+            {
 
-
+                _gameSounds.GameSounds.Where(b => b.Name == "OofMale").First().PlayLoop();
+            }
+            else if(_gamePlayer.Gender == Player.Genders.Female)
+            {
+                _gameSounds.GameSounds.Where(b => b.Name == "OofFemale").First().Play();
+            }
         }
     }
 }

@@ -45,6 +45,7 @@ namespace NucleusLabs
             // 
             InitializeGameObjects();
             InitializeNPCs();
+
         }
 
         

@@ -36,6 +36,7 @@ namespace NucleusLabs
                 controller = _controller
             });
 
+            //The next npc needs to know the lock code..
             string temp =  ((GameObjects.OfType<UsefulItem>().Where(b => b.UsefulItemID == 3).First())as DoorLock).LockCode.ToString();
 
             GameNPCs.Add(new Cat
